@@ -1,8 +1,8 @@
 # Retro Mini
 Pegasus theme for the Retroid Pocket 2.
 
-![screenshot](screenshots/homescreen-snes.png =320x)
-![screenshot](screenshots/games-snes.png =320x)
+<img src="https://github.com/djfumberger/retromini/raw/main/screenshots/homescreen-snes.png" width="320" height="240">
+<img src="https://github.com/djfumberger/retromini/raw/main/screenshots/games-snes.png" width="320" height="240">
 
 ## Installation
 
