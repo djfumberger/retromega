@@ -24,6 +24,7 @@ ListView {
     anchors.right: parent.right
     anchors.bottom: parent.bottom
     model: allSystems
+    cacheBuffer: 10
     delegate: systemsDelegate  
     orientation: ListView.Horizontal
     highlightRangeMode: ListView.StrictlyEnforceRange
@@ -256,6 +257,7 @@ ListView {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: 0
                     anchors.verticalCenterOffset: 10
+                    cache: true
                     scale: 1.0
                     states: [
 

@@ -380,9 +380,11 @@ Item {
                   fillMode: Image.PreserveAspectCrop
                   source: selectedGame ? selectedGame.assets.boxFront : ""
                   asynchronous: false
+                  cache: false
+                  sourceSize.height: 320
                   onStatusChanged: {
                     if (status == Image.Ready) {
-                      update_image_size(sourceSize.width, sourceSize.height, 320);
+                      update_image_size(game_box_art.implicitWidth, game_box_art.implicitHeight, 320);
                     }
                   }
 
