@@ -14,6 +14,13 @@ Item {
         return (collectionSortMode == "title" || collectionSortMode == "release") 
     }
 
+    property var activeSortImage : {
+        var image = "selection"
+        if (showSortOrder) {
+            image = "sort-order-" + currentSortOrder
+        } 
+        return "../assets/images/" + image + (activeFocus ? "-inverted.png" : ".png")
+    }
     height: 42
     focus: true
 
@@ -36,7 +43,7 @@ Item {
     }
     
     Image {
-        source: "../assets/images/" + (parent.activeFocus ? "selection-inverted.png" : "selection.png")
+        source: activeSortImage
         visible: selected
         anchors.rightMargin: 24
         anchors.verticalCenterOffset: 2
@@ -53,16 +60,6 @@ Item {
         font.pixelSize: 16
         font.bold: true
         anchors.verticalCenter: parent.verticalCenter
-    }
-
-    Image {
-        source:  "../assets/images/" + (parent.activeFocus ? "sort-order-" + currentSortOrder + "-inverted.png" : "sort-order-" + currentSortOrder + ".png")
-        anchors.leftMargin: 6
-        anchors.verticalCenterOffset: 0
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: title_text.right
-        visible: selected && showSortOrder
-        opacity: 0.3
     }
 
 }
