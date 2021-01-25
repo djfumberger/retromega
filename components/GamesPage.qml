@@ -156,7 +156,7 @@ Item {
         ButtonLegend {
             id: button_legend_details
             title: "Favorite"
-            key: "Y"
+            key: "X"
             width: 75
             visible: collectionFilterMode == "all"
             anchors.left: button_legend_back.right
@@ -164,15 +164,15 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
         }
 
-        ButtonLegend {
-            id: button_legend_grid
-            title: "Grid"
-            key: "X"
-            width: 55
-            anchors.left: collectionFilterMode == "all" ? button_legend_details.right : button_legend_back.right
-            anchors.leftMargin: 24
-            anchors.verticalCenter: parent.verticalCenter
-        }
+        // ButtonLegend {
+        //     id: button_legend_grid
+        //     title: "Grid"
+        //     key: "X"
+        //     width: 55
+        //     anchors.left: collectionFilterMode == "all" ? button_legend_details.right : button_legend_back.right
+        //     anchors.leftMargin: 24
+        //     anchors.verticalCenter: parent.verticalCenter
+        // }
 
     }        
 
