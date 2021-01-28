@@ -117,8 +117,8 @@ FocusScope {
         "genesis"  : "#DF535B",
         "neogeo"   : "#1499DE",
         "android"  : "#5BFF92",
-        "gb"        : "#373B99",
-        "gba"      : "#6935E9",
+        "gb"        : "#1DA1DC",
+        "gba"      : "#342692", //373B99
         "gbc1"      : "#EE60A5",
         "gbc"      : "#7B4CCC",
         "pcengine" : "#FF955B",

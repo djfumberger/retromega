@@ -295,7 +295,7 @@ ListView {
                     font.letterSpacing: letterSpacing(modelData.name)
                     font.bold: true       
                     color: itemTextColor
-                    width: 320
+                    width: 280
                     wrapMode: Text.WordWrap
                     anchors.rightMargin: 30
                     visible: true
