@@ -129,30 +129,23 @@ ListView {
             
             z: 100 - index
             Keys.onPressed: {
-            if (api.keys.isAccept(event)) {
-                event.accepted = true;
-                
-                //We update the collection we want to browse
-                setCollectionListIndex(0)
-                setCollectionIndex(home_item_container.ListView.view.currentIndex)
-
-                //We change Pages
-                navigate('GamesPage');
-                
-                return;
-            }      
-            if (api.keys.isFilters(event)) {
-                event.accepted = true;
-                toggleZoom();
-                return;
-            }  
-            // if (api.keys.isDetails(event)) {
-            //     event.accepted = true;
-            //     toggleZoom();
-            //     return;
-            // }  
-
+                if (api.keys.isAccept(event)) {
+                    event.accepted = true;
                     
+                    //We update the collection we want to browse
+                    setCollectionListIndex(0)
+                    setCollectionIndex(home_item_container.ListView.view.currentIndex)
+
+                    //We change Pages
+                    navigate('GamesPage');
+                    
+                    return;
+                }      
+                if (api.keys.isFilters(event)) {
+                    event.accepted = true;
+                    toggleZoom();
+                    return;
+                }                      
             }                          
 
 
@@ -178,35 +171,6 @@ ListView {
                 transitions: Transition {
                     NumberAnimation { properties: "scale, opacity"; easing.type: Easing.InOutCubic; duration: 225  }
                 }
-
-                // Image {
-                //     id: menu_mask
-                //     width: 617
-                //     height: 480
-                //     anchors.top: parent.top
-                //     anchors.left: parent.left
-                //     anchors.leftMargin: -75
-                //     anchors.topMargin: -55
-                //     z: 0
-                //     source: "../assets/images/menu-mask.png"
-                // }
-
-                // ColorOverlay {
-                //     anchors.fill: menu_mask
-                //     source: menu_mask
-                //     color:  systemColors[modelData.shortName]  
-                // }
-                
-                
-                // Rectangle {
-                //     id: tile_contentt
-                //     width: 640
-                //     height: 480
-                //     anchors.top: parent.top
-                //     anchors.left: parent.left
-                //     anchors.topMargin: -55
-                //     color: systemColors[modelData.shortName] ?? "#000000"                                                                                       
-                // }
                 
                 Image {
                     id: menu_mask
@@ -234,8 +198,7 @@ ListView {
                     clip: false
                     visible: false
                                                                                        
-                }
-                
+                }                
                     
                 DropShadow {
                     anchors.fill: mask
@@ -247,17 +210,16 @@ ListView {
                     color: systemColors[modelData.shortName]
                     source: mask
                 }   
-
                 
                 Image {
                     id: device
                     source: "../assets/images/devices/"+modelData.shortName+".png"
                     anchors.right: parent.right
-                    //anchors.bottom: parent.bottom
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: 0
                     anchors.verticalCenterOffset: 10
                     cache: true
+                    asynchronous: true
                     scale: 1.0
                     states: [
 
@@ -301,7 +263,6 @@ ListView {
                     visible: true
                     lineHeight: 0.8
                     anchors.verticalCenter: parent.verticalCenter
-                    //anchors.horizontalCenter: parent.horizontalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 30
                     anchors.verticalCenterOffset: -5
@@ -318,16 +279,12 @@ ListView {
                 
                 Text {
                     text: modelData.games.count + " games"
-                    //anchors.bottom: parent.bottom
-                    //anchors.bottomMargin: 20
                     font.pixelSize: 14
                     font.letterSpacing: -0.3
                     font.bold: true       
                     color: itemTextColor
                     opacity: 0.7    
-                    //anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: -27
-                    //anchors.horizontalCenter: parent.horizontalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 30
                     anchors.bottom: title.bottom
@@ -336,16 +293,12 @@ ListView {
 
                 Text {
                     text: systemCompanies[modelData.shortName].toUpperCase()
-                    //anchors.bottom: parent.bottom
-                    //anchors.bottomMargin: 20
                     font.pixelSize: 12
                     font.letterSpacing: 1.3
                     font.bold: true       
                     color: itemTextColor
                     opacity: 0.7    
-                    //anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottomMargin: -1
-                    //anchors.horizontalCenter: parent.horizontalCenter
                     anchors.left: parent.left
                     anchors.leftMargin: 30
                     anchors.bottom: title.top
