@@ -49,7 +49,7 @@ Item {
 
     HeaderHome {
         id: header
-        z: 1000
+        z: 1
         light: (currentHomeIndex == 0 && currentPage === "HomePage")
     }
 
@@ -59,7 +59,7 @@ Item {
         light: (currentHomeIndex == 0 && currentPage === "HomePage")
         anchors.bottom: homepage.bottom
         visible: true
-        z: 1000
+        z: (currentHomeIndex == 0) ? 1 : 0
     }
 
 
