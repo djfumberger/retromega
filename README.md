@@ -1,5 +1,5 @@
 # Retro Mega v0.1
-Pegasus theme for the Retroid Pocket 2.
+[Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
 <img src="https://github.com/djfumberger/retromini/raw/main/screenshots/homescreen-snes.png" width="320" height="240">
 <img src="https://github.com/djfumberger/retromini/raw/main/screenshots/games-snes.png" width="320" height="240">
