@@ -25,21 +25,6 @@ Rectangle {
     height: layoutHeader.height
     anchors.top: parent.top      
 
-
-    // CustomBorder {
-    //     leftMargin: 22
-    //     rightMargin: 22
-    //     width: parent.width 
-    //     height: parent.height
-    //     lBorderwidth: 0
-    //     rBorderwidth: 0
-    //     tBorderwidth: 0
-    //     bBorderwidth: 1
-    //     //color: theme.background
-    //     color: "transparent"
-    //     borderColor: "#e3e3e3"
-    // }  
-
     Rectangle {
         anchors.leftMargin: 22
         anchors.rightMargin: 22
@@ -108,7 +93,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 16
         anchors.rightMargin: 32
-        color: "#9B9B9B"
+        color: light ? "#60ffffff" : "#60000000"
         font.pixelSize: 18
         font.letterSpacing: -0.3
         font.bold: true              
