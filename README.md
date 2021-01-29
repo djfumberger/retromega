@@ -1,4 +1,4 @@
-# Retro Mini v0.1
+# Retro Mega v0.1
 Pegasus theme for the Retroid Pocket 2.
 
 <img src="https://github.com/djfumberger/retromini/raw/main/screenshots/homescreen-snes.png" width="320" height="240">
@@ -6,7 +6,7 @@ Pegasus theme for the Retroid Pocket 2.
 
 ## Installation
 
-[Download](https://github.com/djfumberger/retromini/archive/main.zip) and extract to your [theme directory](http://pegasus-frontend.org/docs/user-guide/installing-themes) under the folder retromini. You can then select the theme in the settings menu of Pegasus.
+[Download](https://github.com/djfumberger/retromega/archive/main.zip) and extract to your [theme directory](http://pegasus-frontend.org/docs/user-guide/installing-themes) under the folder retromini. You can then select the theme in the settings menu of Pegasus.
 
 To get Pegasus setup on your Retroid Pocket 2 there's a great guide [available here](https://basvroegop.nl/pegasus)
 
@@ -16,6 +16,7 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great guide [available h
 * Quick browsing
 * Sorting by title, date, rating, last played.
 * Filtering by favorites
+* Make sure to remember where you left off.
 
 ## Planned Updates
 * Search
