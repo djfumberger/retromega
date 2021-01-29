@@ -112,35 +112,70 @@ Item {
                 }
                 
                 // Favourites
-                GamesList {
-                    id: favoriteView
-                    width: parent.width
-                    height: parent.height
-                    items: allFavorites      
-                    visible: currentHomeIndex == 1
-                    focus: currentHomeIndex == 1
-                    hideFavoriteIcon: true
+                Component {
+                    id: favoriteView                    
+                    GamesList {
+                        width: parent.width
+                        height: parent.height
+                        items: allFavorites      
+                        focus: true
+                        hideFavoriteIcon: true
+                    }
                 }
+
+                Loader  {
+                    id: favoritesLoader
+                    focus: currentHomeIndex == 1
+                    active: opacity !== 0
+                    opacity: focus ? 1 : 0
+                    anchors.fill: parent
+                    sourceComponent: favoriteView
+                    asynchronous: false
+                }                
 
                 // Recents
-                GamesList {
-                    id: recentsView
-                    width: parent.width
-                    height: parent.height
-                    items: allRecentlyPlayed      
-                    visible: currentHomeIndex == 2
-                    focus: currentHomeIndex == 2
+                Component {
+                    id: recentsView                    
+                    GamesList {
+                        width: parent.width
+                        height: parent.height
+                        items: allRecentlyPlayed      
+                        focus: true
+                    }
                 }
 
+                Loader  {
+                    id: recentsLoader
+                    focus: currentHomeIndex == 2
+                    active: opacity !== 0
+                    opacity: focus ? 1 : 0
+                    anchors.fill: parent
+                    sourceComponent: recentsView
+                    asynchronous: false
+                }  
+
                 // Apps
-                GamesList {
-                    id: appsView
-                    width: parent.width
-                    height: parent.height
-                    items: androidCollection.games      
-                    visible: currentHomeIndex == 3
+                Component {
+                    id: appsView                    
+                    GamesList {
+                        width: parent.width
+                        height: parent.height
+                        items: androidCollection.games      
+                        visible: currentHomeIndex == 3
+                        focus: currentHomeIndex == 3
+                    }          
+                }
+
+                Loader  {
+                    id: appsLoader
                     focus: currentHomeIndex == 3
-                }          
+                    active: opacity !== 0
+                    opacity: focus ? 1 : 0
+                    anchors.fill: parent
+                    sourceComponent: appsView
+                    asynchronous: false
+                }  
+
             } 
         }  
     }

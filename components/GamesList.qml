@@ -3,9 +3,11 @@ import QtGraphicalEffects 1.12
 
 Item { 
     id: listContent
+    
     property var listIdentifier: {
         return gameView
     }
+
     property var footerTitle: {
         if (items.count > 0) {
             return (gameView.currentIndex + 1) + " of " + items.count
@@ -15,12 +17,13 @@ Item {
             return "No Games"
         }
     }
+
     property var gamesColor : "#000000"
     property var selectedGame: {
         return gameView.currentIndex >= 0 ? items.get(gameView.currentIndex) : items.get(0)
     } 
     property var viewType : 'list'
-    property var currentIndex : 0
+    property alias currentIndex : gameView.currentIndex
     property var boxImageWidth : 1
     property var boxImageHeight : 1
     property var hideFavoriteIcon : false
@@ -46,7 +49,6 @@ Item {
 
     property var showSeeAll : false
     property var onSeeAll : { }
-    
     property var onIndexChanged : function(title, index, total) {
         
     }
@@ -158,8 +160,6 @@ Item {
                     }
                     navSound.play(); 
                 }
-                //Keys.onDownPressed:     { navSound.play(); event.accepted = false }
-                //Keys.onUpPressed:       { navSound.play(); event.accepted = false }
 
               move: Transition {
                  NumberAnimation { properties: "x,y,contentY"; duration: 100 }
@@ -320,25 +320,6 @@ Item {
             anchors.bottom: parent.bottom
             z: 2001
 
-            // states: [ 
-                                  
-            //     State{
-            //       name: "default"; when: !launchingGame
-            //       PropertyChanges { target: game_detail; anchors.rightMargin: 0.0}
-            //     },
-
-            //     State{
-            //       name: "active"; when: launchingGame
-            //       PropertyChanges { target: game_detail; anchors.rightMargin: 160.0}
-            //     }
-
-            // ]
-
-            // transitions: Transition {
-            //     NumberAnimation { properties: "anchors.rightMargin"; easing.type: Easing.OutCubic ; duration: 400  }
-            // }  
-
-
             Rectangle {
                 id: game_background_overlay
                 visible: true
@@ -355,7 +336,7 @@ Item {
                 height: boxImageHeight
                 anchors.horizontalCenter: parent.horizontalCenter
                 y: ((parent.height - boxImageHeight) / 2) + ((boxImageWidth > boxImageHeight) ? 0 : 0)
-                visible: selectedGame != null
+                visible: (selectedGame != null && selectedGame.assets.boxFront)
 
                 Image {
                     source: "../assets/images/cover-shadow.png"
@@ -370,7 +351,6 @@ Item {
                 Image {
                   anchors.horizontalCenter: parent.horizontalCenter
                   anchors.verticalCenter: parent.verticalCenter
-
                   property bool rounded: true
                   id: game_box_art
                   smooth: true
@@ -381,7 +361,7 @@ Item {
                   source: selectedGame ? selectedGame.assets.boxFront : ""
                   asynchronous: false
                   cache: false
-                  sourceSize.height: 320
+                  sourceSize: { width: 320; height: 320 }
                   onStatusChanged: {
                     if (status == Image.Ready) {
                       update_image_size(game_box_art.implicitWidth, game_box_art.implicitHeight, 320);

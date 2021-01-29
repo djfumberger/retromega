@@ -5,6 +5,7 @@ Item {
 
     property var showSort : false
     property var showAllItems : false
+    property alias currentIndex: gameList.currentIndex
 
     property var footerTitle: {
         return gameList.footerTitle
@@ -15,12 +16,9 @@ Item {
     }
 
     property var headerTitle: {
-        if (showAllItems) {
-            return "All " + currentCollection.name
-        } else {
-            return currentCollection.name
-        }
+        return (showAllItems) ? "All " + currentCollection.name : currentCollection.name
     }
+    
     property var collectionSortTitle: {
         var title = "Title"
         switch (collectionSortMode) {
@@ -65,10 +63,19 @@ Item {
         }
     }
 
+    property var onShow: function() {
+        currentIndex = 0
+    }
+
+    Component.onCompleted: {
+        onShow()
+    }
+
     width: layoutScreen.width                
     height: layoutScreen.height                
 
-    Keys.onPressed: {              
+    Keys.onPressed: {           
+
         // Show / Hide Sort
         if (api.keys.isPageDown(event)) {
             event.accepted = true;
@@ -83,11 +90,11 @@ Item {
                 showSort = false
                 backSound.play()
             } else if (showAllItems) {
-                gameList.listIdentifier.currentIndex = 0
+                gameList.currentIndex = -1
                 showAllItems = false
                 backSound.play()
             } else {
-                gameList.listIdentifier.currentIndex = 0
+                gameList.currentIndex = -1
                 navigate('HomePage');
             }
             return
@@ -120,7 +127,7 @@ Item {
             borderColor: "#e3e3e3"
         }
 
-        Text{
+        Text {
             text: footerTitle
             anchors.right: parent.right
             anchors.rightMargin: 32
@@ -221,11 +228,9 @@ Item {
         Text {
             id: header_time
             text: collectionSortTitle
-            //anchors.right: parent.right
             anchors.right: legend.left
             anchors.top: parent.top
             anchors.topMargin: 16
-            //anchors.rightMargin: 32
             anchors.rightMargin: 8
             color: "#9B9B9B"
             font.pixelSize: 18
@@ -314,7 +319,7 @@ Item {
             height: parent.height 
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            gamesColor: systemColor
+            gamesColor: systemColor            
             items:  gamesItems
             showSeeAll: collectionFilterMode == "favorites" && !showAllItems
             hideFavoriteIcon: collectionFilterMode == "favorites" && !showAllItems

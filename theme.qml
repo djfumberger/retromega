@@ -184,6 +184,9 @@ FocusScope {
         } else {
             forwardSound.play()
         }
+        if (page == 'GamesPage') {
+           gamesPage.onShow()
+        }
     }
   
     //Sounds
@@ -278,12 +281,16 @@ FocusScope {
         height: layoutScreen.height
         anchors.top: parent.top
 
+        // Home Page
         Components.HomePage {
             visible: currentPage === 'HomePage' ? 1 : 0 ;
         }
 
+        // Games Page
         Components.GamesPage {
+            id: gamesPage
             visible: currentPage === 'GamesPage' ? 1 : 0 ;
         }  
+          
     }   
 }
