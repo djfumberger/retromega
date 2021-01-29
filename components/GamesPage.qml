@@ -64,7 +64,7 @@ Item {
     }
 
     property var onShow: function() {
-        currentIndex = 0
+        currentIndex = collectionListIndex
     }
 
     Component.onCompleted: {
