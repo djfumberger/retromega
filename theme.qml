@@ -111,7 +111,7 @@ FocusScope {
     
     property var systemColors : {
         "gg"       : "#011DA9",
-        "gamegear" : "#011DA9",
+        "gamegear" : "#FFAA22", // 
         "snes"     : "#AA6AFF",
         "ngp"     : "#AA6AFF",
         "genesis"  : "#DF535B",
