@@ -111,14 +111,14 @@ FocusScope {
     
     property var systemColors : {
         "gg"       : "#011DA9",
-        "gamegear" : "#FFAA22", // 
+        "gamegear" : "#FFAA22",
         "snes"     : "#AA6AFF",
         "ngp"     : "#AA6AFF",
         "genesis"  : "#DF535B",
         "neogeo"   : "#1499DE",
         "android"  : "#5BFF92",
         "gb"        : "#1DA1DC",
-        "gba"      : "#342692", //373B99
+        "gba"      : "#342692",
         "gbc1"      : "#EE60A5",
         "gbc"      : "#7B4CCC",
         "pcengine" : "#FF955B",
@@ -126,10 +126,13 @@ FocusScope {
         "n64"      : "#FF5B5B",
         "psx"      : "#F0CC40",
         "sega32x"      : "#6935E9",
-        "segacd"      : "#C85173"
+        "segacd"      : "#C85173",
+        "dreamcast"   : "#2387FF",
+        "default"     : "#2387FF"
     }
     
     property var systemCompanies: {
+        "dreamcast"  : "Sega",
         "gg"         : "Sega",
         "gamegear"   : "Sega",
         "genesis"    : "Sega",

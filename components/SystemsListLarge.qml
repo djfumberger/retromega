@@ -43,11 +43,11 @@ ListView {
         NumberAnimation { properties: "x,y"; duration: 3000 }
     }
     Keys.onLeftPressed: {  
-        decrementCurrentIndex(); navSound.play(); tile_contentt.bgIndex = currentIndex
+        decrementCurrentIndex(); navSound.play(); systemsBackground.bgIndex = currentIndex
     } 
 
     Keys.onRightPressed: {  
-        incrementCurrentIndex(); navSound.play();  tile_contentt.bgIndex = currentIndex
+        incrementCurrentIndex(); navSound.play();  systemsBackground.bgIndex = currentIndex
     }
 
     Timer {
@@ -72,37 +72,22 @@ ListView {
     }
 
     Rectangle {
-        property int bgIndex: 0
-        id: tile_contentt
+        property int bgIndex: -1
+        id: systemsBackground
         width: 640
         height: 480
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: -55
-        //color: systemColors[allSystems.get(currentIndex).shortName] ?? "#000000"
         z: -1
-
-        // states: [
-        //     State {
-        //         name: "nes"; when: allSystems.get(currentIndex).shortName == "nes"
-        //         PropertyChanges { target: tile_contentt; color: systemColors["nes"] }
-        //     },
-
-        //     State {
-        //         name: "snes"; when: allSystems.get(currentIndex).shortName == "nses"
-        //         PropertyChanges { target: tile_contentt; color: systemColors["snes"] }
-        //     }
-        // ]
         Behavior on bgIndex {
             ColorAnimation {
-                target: tile_contentt; property: "color"; to: systemColors[allSystems.get(currentIndex).shortName] ?? systemColors["default"]; duration: 335
+                target: systemsBackground; property: "color"; to: systemColors[allSystems.get(currentIndex).shortName] ?? systemColors["default"]; duration: 335
             }
         }
-
         transitions: Transition {
             ColorAnimation { properties: "color"; easing.type: Easing.InOutQuad ; duration: 335 }
         }
-        //ColorAnimation on color { to: systemColors[allSystems.get(currentIndex).shortName] ?? "#000000"; duration: 1500 }
     }
 
     Component.onDestruction: {
@@ -114,8 +99,7 @@ ListView {
         delay(50, function() {
             systemsListView.positionViewAtIndex(currentCollectionIndex, ListView.Center)
         })
-        tile_contentt.bgIndex = currentIndex
-        //currentIndex = currentCollectionIndex
+        systemsBackground.bgIndex = currentIndex
     }
     Component {
         id: systemsDelegate
