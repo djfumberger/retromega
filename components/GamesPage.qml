@@ -91,10 +91,12 @@ Item {
                 backSound.play()
             } else if (showAllItems) {
                 gameList.currentIndex = -1
+                gameList.box_art.initialLoad = true
                 showAllItems = false
                 backSound.play()
             } else {
                 gameList.currentIndex = -1
+                gameList.box_art.initialLoad = true
                 navigate('HomePage');
             }
             return
@@ -104,8 +106,14 @@ Item {
     }
 
     Rectangle {
-        id: footer
+        id: background
         color: theme.background
+        anchors.fill: parent
+    }
+    
+    Rectangle {
+        id: footer
+        color: "transparent"
         width: parent.width
         height: 55
         anchors.left: parent.left
@@ -114,17 +122,14 @@ Item {
         anchors.bottom: parent.bottom
         clip:true
 
-        CustomBorder {
-            color: theme.background
-            leftMargin: 22
-            rightMargin: 22
-            width: parent.width
-            height: parent.height
-            lBorderwidth: 0
-            rBorderwidth: 0
-            tBorderwidth: 1
-            bBorderwidth: 0
-            borderColor: "#e3e3e3"
+        Rectangle {
+            anchors.leftMargin: 22
+            anchors.rightMargin: 22
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#e3e3e3"
+            anchors.top: parent.top
+            height: 1
         }
 
         Text {
@@ -189,7 +194,7 @@ Item {
     */
     Rectangle {
         id: header
-        color: theme.background
+        color: "transparent"
         width: 640
         height: 55
         anchors.left: parent.left
@@ -198,17 +203,14 @@ Item {
         anchors.top: parent.top
         clip:true
 
-        CustomBorder {
-            leftMargin: 22
-            rightMargin: 22
-            width: parent.width 
-            height: parent.height
-            lBorderwidth: 0
-            rBorderwidth: 0
-            tBorderwidth: 0
-            bBorderwidth: 1
-            color: theme.background
-            borderColor: "#e3e3e3"
+        Rectangle {
+            anchors.leftMargin: 22
+            anchors.rightMargin: 22
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#e3e3e3"
+            anchors.bottom: parent.bottom
+            height: 1
         }
 
         Text{
@@ -301,9 +303,11 @@ Item {
         }
     }
 
-    function onSeeAllEvent() {
-        showAllItems = true
+    function onSeeAllEvent() {        
+        collectionListIndex = 0
+        showAllItems = true     
     }
+
     FocusScope {
         id: listFocus
         focus: currentPage === "GamesPage" && !showSort ? true : false ;
