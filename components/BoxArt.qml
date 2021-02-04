@@ -2,25 +2,34 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
+
+    // When the box art is used across screens, 
+    // context signals when the contents needs to be reset
+    // Basically avoids seeing previous artwork on an unrelated screen / state
+    property var context: "default"
+
+    // Asset to load
     property var asset: string
+
+    // If first time the box art is loaded. In this case loads sync 
     property var initialLoad: true
+
+    // State
     property var loadingError: false
     property var loadingImage: true
     
-    property var wasInitialLoad: true
+    // Convenience 
     property var emptyAsset: {
         return (asset == "" || asset == null)
     }
 
-    onVisibleChanged: {
-        if (!wasInitialLoad) {
-            game_box_art_previous.source = ""
-        } 
-    }
+    onContextChanged: {
+        // When context changes, remove the cached image underneath 
+        game_box_art_previous.source = ""
 
-    onAssetChanged: {
-        if (emptyAsset) {
-            game_box_art_previous.source = ""
+        // If image is in process of loading then hide the shadow so we don't just see a black square & shadow
+        if (game_box_art.status == Image.Loading) {
+            game_box_shadow.opacity = 0
         }
     }
 
@@ -42,6 +51,7 @@ Item {
     anchors.verticalCenter: parent.verticalCenter
     visible: (emptyAsset || loadingError || initialLoad == true) ? false : true
 
+    // Shadow. Using an image for better shadow visuals & performance.
     Image {
         id: game_box_shadow
         source: "../assets/images/cover-shadow.png"
@@ -52,6 +62,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
     }
 
+    // Image container with rounded corners
     Item {
         property bool rounded: true
         id: box_art_container
@@ -60,6 +71,8 @@ Item {
         width: parent.width
         height: parent.height
 
+        // Cached image of the last box art that was shown. 
+        // This is used to avoid the box art  flickering when scrolling and images are loading.
         Image {
             anchors.fill: parent
             id: game_box_art_previous
@@ -68,6 +81,7 @@ Item {
             asynchronous: false
         }
 
+        // Main image that's primarily seen.
         Image {
             anchors.fill: parent
             id: game_box_art
@@ -96,10 +110,10 @@ Item {
                     game_box_art_previous.source = source 
                     game_box_shadow.opacity = 1.0
                     opacity = 1.0
-                    box_art.wasInitialLoad = box_art.initialLoad
                     box_art.loadingError = false
                     box_art.initialLoad = false
-                    box_art.loadingImage = false                    
+                    box_art.loadingImage = false    
+                    box_art.forceSync = false                
                 }
             }
         }

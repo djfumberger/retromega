@@ -325,6 +325,7 @@ Item {
             anchors.bottom: parent.bottom
             gamesColor: systemColor            
             items:  gamesItems
+            context: collectionShowAllItems ? "all" : "default"
             showSeeAll: collectionFilterMode == "favorites" && !collectionShowAllItems
             hideFavoriteIcon: collectionFilterMode == "favorites" && !collectionShowAllItems
             onSeeAll: onSeeAllEvent

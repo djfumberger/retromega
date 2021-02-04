@@ -3,6 +3,8 @@ import QtGraphicalEffects 1.12
 
 Item { 
     id: listContent
+
+    property var context : "default"
     
     property var listIdentifier: {
         return gameView
@@ -172,6 +174,11 @@ Item {
                   
                   Keys.onPressed: {                                            
                         //Launch game
+                        if (api.keys.isCancel(event)) {
+                            if (showSeeAll) {
+                                focusSeeAll = false
+                            }
+                        }
                         if (api.keys.isAccept(event)) {
                             event.accepted = true;
 
@@ -308,6 +315,7 @@ Item {
             BoxArt {
                 id: game_box_art
                 asset: selectedGame && gameView.currentIndex >= 0 && !focusSeeAll ? selectedGame.assets.boxFront : ""
+                context: currentCollection.shortName + listContent.context
             }
 
         }
