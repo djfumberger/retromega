@@ -3,6 +3,8 @@ import QtGraphicalEffects 1.12
 
 Item { 
     id: listContent
+
+    property var context : "default"
     
     property var listIdentifier: {
         return gameView
@@ -24,8 +26,7 @@ Item {
     } 
     property var viewType : 'list'
     property alias currentIndex : gameView.currentIndex
-    property var boxImageWidth : 1
-    property var boxImageHeight : 1
+    property alias box_art : game_box_art
     property var hideFavoriteIcon : false
     property var defaultIndex: 0
     property var launchingGame : false
@@ -67,20 +68,6 @@ Item {
         } else {
             return 42
         }
-    }
-
-    function update_image_size(width, height, container_size) {
-      var fill = 0.65
-      if (width > height) {
-        fill = 0.75
-      }
-      boxImageWidth = size_image(width, height, container_size * fill).width
-      boxImageHeight = size_image(width, height, container_size * fill).height
-    }
-
-    function size_image(width, height, max_width) {
-        var imageHeight = (height / width) * max_width
-        return { height: imageHeight, width: max_width }
     }
 
     function updatedIndex() {
@@ -187,6 +174,11 @@ Item {
                   
                   Keys.onPressed: {                                            
                         //Launch game
+                        if (api.keys.isCancel(event)) {
+                            if (showSeeAll) {
+                                focusSeeAll = false
+                            }
+                        }
                         if (api.keys.isAccept(event)) {
                             event.accepted = true;
 
@@ -320,75 +312,12 @@ Item {
             anchors.bottom: parent.bottom
             z: 2001
 
-            Rectangle {
-                id: game_background_overlay
-                visible: true
-                color: "transparent"
-                opacity: 1.0
-                anchors.fill: game_background
-                width: parent.width
-                height: parent.height           
+            BoxArt {
+                id: game_box_art
+                asset: selectedGame && gameView.currentIndex >= 0 && !focusSeeAll ? selectedGame.assets.boxFront : ""
+                context: currentCollection.shortName + listContent.context
             }
 
-            Item {
-                id: game_box_art_container
-                width: boxImageWidth
-                height: boxImageHeight
-                anchors.horizontalCenter: parent.horizontalCenter
-                y: ((parent.height - boxImageHeight) / 2) + ((boxImageWidth > boxImageHeight) ? 0 : 0)
-                visible: (selectedGame != null && selectedGame.assets.boxFront)
-
-                Image {
-                    source: "../assets/images/cover-shadow.png"
-                    width: (371 / 200) * parent.width
-                    height: (371 / 200) * parent.height
-                    fillMode: Image.PreserveAspectFill
-                                      anchors.horizontalCenter: parent.horizontalCenter
-                  anchors.verticalCenter: parent.verticalCenter
-
-                }
-
-                Image {
-                  anchors.horizontalCenter: parent.horizontalCenter
-                  anchors.verticalCenter: parent.verticalCenter
-                  property bool rounded: true
-                  id: game_box_art
-                  smooth: true
-                  property bool adapt: true
-                  width: parent.width
-                  height: parent.height
-                  fillMode: Image.PreserveAspectCrop
-                  source: selectedGame ? selectedGame.assets.boxFront : ""
-                  asynchronous: false
-                  cache: false
-                  sourceSize: { width: 320; height: 320 }
-                  onStatusChanged: {
-                    if (status == Image.Ready) {
-                      update_image_size(game_box_art.implicitWidth, game_box_art.implicitHeight, 320);
-                    }
-                  }
-
-                  layer.enabled: rounded
-                  layer.effect: OpacityMask {
-                      maskSource: Item {
-                          width: game_box_art.width
-                          height: game_box_art.height
-                          Rectangle {
-                              anchors.centerIn: parent
-                              width: game_box_art.adapt ? game_box_art.width : Math.min(game_box_art.width, game_box_art.height)
-                              height: game_box_art.adapt ? game_box_art.height : width
-                              radius: 6
-                          }
-                      }
-                  }
-                }
-            }
         }
     }
 }
-
-/*##^##
-Designer {
-    D{i:0;autoSize:true;height:480;width:640}
-}
-##^##*/

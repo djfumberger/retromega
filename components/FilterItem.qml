@@ -16,6 +16,9 @@ Item {
         if (api.keys.isAccept(event)) {
             event.accepted = true;
             setCollectionFilterMode(filter);
+            if (filter == "all") {
+                setCollectionShowAllItems(false)
+            }
             return;
         }  
         event.accepted = false;

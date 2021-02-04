@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.12
 Item {
 
     property var showSort : false
-    property var showAllItems : false
     property alias currentIndex: gameList.currentIndex
 
     property var footerTitle: {
@@ -16,7 +15,7 @@ Item {
     }
 
     property var headerTitle: {
-        return (showAllItems) ? "All " + currentCollection.name : currentCollection.name
+        return (collectionShowAllItems) ? "All " + currentCollection.name : currentCollection.name
     }
     
     property var collectionSortTitle: {
@@ -56,7 +55,7 @@ Item {
             }
         }
 
-        if (collectionFilterMode == "favorites" && !showAllItems) {
+        if (collectionFilterMode == "favorites" && !collectionShowAllItems) {
             return "Favorites, " + title 
         }  else {
             return title
@@ -65,6 +64,12 @@ Item {
 
     property var onShow: function() {
         currentIndex = collectionListIndex
+    }
+
+
+    function onSeeAllEvent() {        
+        setCollectionListIndex(0)
+        setCollectionShowAllItems(true)    
     }
 
     Component.onCompleted: {
@@ -89,12 +94,14 @@ Item {
             if (showSort) {
                 showSort = false
                 backSound.play()
-            } else if (showAllItems) {
+            } else if (collectionShowAllItems) {
                 gameList.currentIndex = -1
-                showAllItems = false
+                gameList.box_art.initialLoad = true
+                setCollectionShowAllItems(false)
                 backSound.play()
             } else {
                 gameList.currentIndex = -1
+                gameList.box_art.initialLoad = true
                 navigate('HomePage');
             }
             return
@@ -104,8 +111,14 @@ Item {
     }
 
     Rectangle {
-        id: footer
+        id: background
         color: theme.background
+        anchors.fill: parent
+    }
+    
+    Rectangle {
+        id: footer
+        color: "transparent"
         width: parent.width
         height: 55
         anchors.left: parent.left
@@ -114,17 +127,14 @@ Item {
         anchors.bottom: parent.bottom
         clip:true
 
-        CustomBorder {
-            color: theme.background
-            leftMargin: 22
-            rightMargin: 22
-            width: parent.width
-            height: parent.height
-            lBorderwidth: 0
-            rBorderwidth: 0
-            tBorderwidth: 1
-            bBorderwidth: 0
-            borderColor: "#e3e3e3"
+        Rectangle {
+            anchors.leftMargin: 22
+            anchors.rightMargin: 22
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#e3e3e3"
+            anchors.top: parent.top
+            height: 1
         }
 
         Text {
@@ -165,7 +175,7 @@ Item {
             title: "Favorite"
             key: "X"
             width: 75
-            visible: collectionFilterMode == "all"
+            visible: collectionFilterMode == "all" || collectionShowAllItems
             anchors.left: button_legend_back.right
             anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
@@ -189,7 +199,7 @@ Item {
     */
     Rectangle {
         id: header
-        color: theme.background
+        color: "transparent"
         width: 640
         height: 55
         anchors.left: parent.left
@@ -198,17 +208,14 @@ Item {
         anchors.top: parent.top
         clip:true
 
-        CustomBorder {
-            leftMargin: 22
-            rightMargin: 22
-            width: parent.width 
-            height: parent.height
-            lBorderwidth: 0
-            rBorderwidth: 0
-            tBorderwidth: 0
-            bBorderwidth: 1
-            color: theme.background
-            borderColor: "#e3e3e3"
+        Rectangle {
+            anchors.leftMargin: 22
+            anchors.rightMargin: 22
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "#e3e3e3"
+            anchors.bottom: parent.bottom
+            height: 1
         }
 
         Text{
@@ -292,7 +299,7 @@ Item {
     }
 
     property var gamesItems: {
-        if (showAllItems) {
+        if (collectionShowAllItems) {
             return currentCollectionGamesSorted
         } else if (collectionFilterMode == "favorites" && currentCollectionGamesSortedFiltered.count == 0) {
             return emptyListModel
@@ -301,9 +308,6 @@ Item {
         }
     }
 
-    function onSeeAllEvent() {
-        showAllItems = true
-    }
     FocusScope {
         id: listFocus
         focus: currentPage === "GamesPage" && !showSort ? true : false ;
@@ -321,8 +325,9 @@ Item {
             anchors.bottom: parent.bottom
             gamesColor: systemColor            
             items:  gamesItems
-            showSeeAll: collectionFilterMode == "favorites" && !showAllItems
-            hideFavoriteIcon: collectionFilterMode == "favorites" && !showAllItems
+            context: collectionShowAllItems ? "all" : "default"
+            showSeeAll: collectionFilterMode == "favorites" && !collectionShowAllItems
+            hideFavoriteIcon: collectionFilterMode == "favorites" && !collectionShowAllItems
             onSeeAll: onSeeAllEvent
             focus: true
         }
