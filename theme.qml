@@ -157,7 +157,8 @@ FocusScope {
         "snes"     : "Nintendo",
         "nes"      : "Nintendo",
         "n64"      : "Nintendo",
-        "pcengine"      : "NEC",
+        "pcengine" : "NEC",
+        "tg16"     : "NEC",
         "psx"      : "Sony",
     }
 
