@@ -129,6 +129,7 @@ FocusScope {
         "gba"      : "#342692",
         "gbc1"      : "#EE60A5",
         "gbc"      : "#7B4CCC",
+        "tg16"     : "#FF955B",
         "pcengine" : "#FF955B",
         "nes"      : "#C85173",
         "n64"      : "#FF5B5B",
