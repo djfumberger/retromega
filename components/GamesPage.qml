@@ -4,7 +4,6 @@ import QtGraphicalEffects 1.12
 Item {
 
     property var showSort : false
-    property var showAllItems : false
     property alias currentIndex: gameList.currentIndex
 
     property var footerTitle: {
@@ -16,7 +15,7 @@ Item {
     }
 
     property var headerTitle: {
-        return (showAllItems) ? "All " + currentCollection.name : currentCollection.name
+        return (collectionShowAllItems) ? "All " + currentCollection.name : currentCollection.name
     }
     
     property var collectionSortTitle: {
@@ -56,7 +55,7 @@ Item {
             }
         }
 
-        if (collectionFilterMode == "favorites" && !showAllItems) {
+        if (collectionFilterMode == "favorites" && !collectionShowAllItems) {
             return "Favorites, " + title 
         }  else {
             return title
@@ -65,6 +64,12 @@ Item {
 
     property var onShow: function() {
         currentIndex = collectionListIndex
+    }
+
+
+    function onSeeAllEvent() {        
+        setCollectionListIndex(0)
+        setCollectionShowAllItems(true)    
     }
 
     Component.onCompleted: {
@@ -89,10 +94,10 @@ Item {
             if (showSort) {
                 showSort = false
                 backSound.play()
-            } else if (showAllItems) {
+            } else if (collectionShowAllItems) {
                 gameList.currentIndex = -1
                 gameList.box_art.initialLoad = true
-                showAllItems = false
+                setCollectionShowAllItems(false)
                 backSound.play()
             } else {
                 gameList.currentIndex = -1
@@ -170,7 +175,7 @@ Item {
             title: "Favorite"
             key: "X"
             width: 75
-            visible: collectionFilterMode == "all"
+            visible: collectionFilterMode == "all" || collectionShowAllItems
             anchors.left: button_legend_back.right
             anchors.leftMargin: 24
             anchors.verticalCenter: parent.verticalCenter
@@ -294,18 +299,13 @@ Item {
     }
 
     property var gamesItems: {
-        if (showAllItems) {
+        if (collectionShowAllItems) {
             return currentCollectionGamesSorted
         } else if (collectionFilterMode == "favorites" && currentCollectionGamesSortedFiltered.count == 0) {
             return emptyListModel
         } else {
             return currentCollectionGamesSortedFiltered
         }
-    }
-
-    function onSeeAllEvent() {        
-        collectionListIndex = 0
-        showAllItems = true     
     }
 
     FocusScope {
@@ -325,8 +325,8 @@ Item {
             anchors.bottom: parent.bottom
             gamesColor: systemColor            
             items:  gamesItems
-            showSeeAll: collectionFilterMode == "favorites" && !showAllItems
-            hideFavoriteIcon: collectionFilterMode == "favorites" && !showAllItems
+            showSeeAll: collectionFilterMode == "favorites" && !collectionShowAllItems
+            hideFavoriteIcon: collectionFilterMode == "favorites" && !collectionShowAllItems
             onSeeAll: onSeeAllEvent
             focus: true
         }

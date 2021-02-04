@@ -16,6 +16,7 @@ FocusScope {
         collectionSortMode = api.memory.get('collectionSortMode') ?? "title"
         collectionSortDirection =  api.memory.get('collectionSortDirection') ?? 0
         collectionFilterMode =  api.memory.get('collectionFilterMode') ?? "all"
+        collectionShowAllItems =  api.memory.get('collectionShowAllItems') ?? false
         startSound.play()
     }
   
@@ -36,6 +37,13 @@ FocusScope {
     function setCollectionListIndex(index) {
         api.memory.set('collectionListIndex', index)
         collectionListIndex = index
+    }
+
+    // Collection list index
+    property var collectionShowAllItems : false
+    function setCollectionShowAllItems(show) {
+        api.memory.set('collectionShowAllItems', show)
+        collectionShowAllItems = show
     }
 
     // Games index
