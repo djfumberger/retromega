@@ -2,7 +2,8 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
-
+    anchors.leftMargin: 200 
+    
     property var showSort : false
     property alias currentIndex: gameList.currentIndex
 
@@ -18,6 +19,7 @@ Item {
         return (collectionShowAllItems) ? "All " + currentCollection.name : currentCollection.name
     }
     
+    property var showIndex: false
     property var collectionSortTitle: {
         var title = "Title"
         switch (collectionSortMode) {

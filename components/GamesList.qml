@@ -31,6 +31,7 @@ Item {
     property var defaultIndex: 0
     property var launchingGame : false
     property var items : []
+    property var showIndex : true
     property var focusSeeAll : false
     property var selectSeeAll : {
         if (showSeeAll) {
@@ -54,6 +55,18 @@ Item {
         
     }
 
+    Keys.onPressed: {
+        // Show / Hide Sort
+        if (api.keys.isPageUp(event)) {
+            event.accepted = true;
+            showIndex = !showIndex
+            if (!showIndex) {
+                listContent.focus = true
+            }
+            return;
+        }  
+    }
+    
     function isLastRow(currentIndex) {
         if (currentIndex == items.count - 1) {
             return true
@@ -93,6 +106,19 @@ Item {
         height: parent.height               
         anchors.top: parent.top
         anchors.bottom: parent.bottom
+        
+        ListIndex {
+            id: listIndex
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: 30
+            focus: showIndex
+            visible: showIndex
+            anchors.leftMargin: 24
+            anchors.topMargin: 12
+            anchors.bottomMargin: 12
+        }
 
         /**
         * -----
@@ -108,6 +134,7 @@ Item {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
+            anchors.leftMargin: showIndex ? 50 : 0
             clip: true
              
             ListView {
