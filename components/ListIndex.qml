@@ -3,21 +3,89 @@ import QtGraphicalEffects 1.12
 
 Item {
     id: listIndex 
+    property var active: false
+    property var listItems: []
     property var items: {
-        return ["A", "B", "C", "D"]
+        return ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    }
+    property var itemIndexes: []
+
+    property var onIndexChanged: function (collectionIndex, index, indexValue) {
+
+    }
+ 
+    onActiveChanged: {
+        if (!active) {
+            return
+        }
+        // Populate items
+        var keyItems = []
+        var keyItemIndexes = []
+        var lastKey = ""
+
+        // Faster to convert to var array than go through the model.
+        var varray = listItems//.toVarArray()
+
+        for (var i = 0; i < varray.count; i++) {
+            var title = varray.get(i).title
+            var firstChar = title.charAt(0).toUpperCase()
+
+            // Don't split out numbers
+            if (parseInt(firstChar) == firstChar) {
+                firstChar = "0"
+            }
+
+            if (firstChar != lastKey) {
+                keyItems.push(firstChar)
+                keyItemIndexes.push(i)
+                lastKey = firstChar
+            }
+        }
+        items = keyItems
+        itemIndexes = keyItemIndexes
     }
 
+
+    function updateIndex() {
+        onIndexChanged(itemIndexes[listView.currentIndex])      
+    }
+
+    
+    Keys.onPressed: {                                            
+
+        // Next page
+        if (api.keys.isNextPage(event)) {
+            event.accepted = true
+            navSound.play()
+            listView.currentIndex = Math.min(listView.currentIndex + 8, items.length - 1)
+            updateIndex()
+            return
+        }  
+        
+        // Prev Page
+        if (api.keys.isPrevPage(event)) {
+            event.accepted = true
+            listView.currentIndex = Math.max(listView.currentIndex - 8, 0)
+            navSound.play()
+            updateIndex()
+            return;
+        }  
+
+        event.accepted = false
+    }     
 
     Keys.onUpPressed: { 
         navSound.play()
         event.accepted = true            
         listView.decrementCurrentIndex();
+        updateIndex()
     }      
 
     Keys.onDownPressed:     { 
         navSound.play()
         event.accepted = true
         listView.incrementCurrentIndex(); 
+        updateIndex()
     }    
 
     DropShadow {
@@ -51,28 +119,31 @@ Item {
         spacing: 4
         snapMode: ListView.SnapOneItem
         highlightMoveDuration: 0
-
-
+        clip: true
     }
 
     Component {
         id: itemDelegate
         Item {
             width: 30
-            height: 32
+            height: 37
             property var selected: {
                 ListView.isCurrentItem && listIndex.activeFocus
             }
             /** Selection Rect */
             Rectangle{
                 id: listSelection
-                width:parent.width
-                height:parent.height
+                width:parent.width - 4
+                height:parent.height - 4
                 color: gamesColor
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.leftMargin: 2
+                anchors.topMargin: 2
                 visible: selected
                 opacity:1
                 x: 0
-                radius: 8
+                radius: 6
             }
             Text {
                 text:items[index]

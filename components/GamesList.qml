@@ -31,8 +31,10 @@ Item {
     property var defaultIndex: 0
     property var launchingGame : false
     property var items : []
-    property var showIndex : true
+    property var indexItems : []
+    property var showIndex : false
     property var focusSeeAll : false
+    property var maintainFocusTop : false
     property var selectSeeAll : {
         if (showSeeAll) {
             if (focusSeeAll) {
@@ -55,16 +57,35 @@ Item {
         
     }
 
+    onShowIndexChanged: {
+        if (showIndex) {
+            maintainFocusTop = true
+        } else {
+            maintainFocusTop = false 
+            listContent.focus = true
+        }
+    }
+
+    Keys.onRightPressed: {
+        showIndex = false
+    }
+
+    Keys.onLeftPressed: {
+        showIndex = true
+    }
+
     Keys.onPressed: {
-        // Show / Hide Sort
+        // Show / Hide Index
         if (api.keys.isPageUp(event)) {
             event.accepted = true;
             showIndex = !showIndex
-            if (!showIndex) {
-                listContent.focus = true
-            }
             return;
         }  
+        if (api.keys.isAccept(event) && showIndex) {
+            event.accepted = true;
+            showIndex = false;
+            return
+        }
     }
     
     function isLastRow(currentIndex) {
@@ -106,7 +127,8 @@ Item {
         height: parent.height               
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        
+    
+
         ListIndex {
             id: listIndex
             anchors.left: parent.left
@@ -114,10 +136,19 @@ Item {
             anchors.bottom: parent.bottom
             width: 30
             focus: showIndex
-            visible: showIndex
-            anchors.leftMargin: 24
-            anchors.topMargin: 12
-            anchors.bottomMargin: 12
+            active: showIndex
+            listItems: indexItems // Faster to avoid using sortproxymodel 
+            anchors.topMargin: 16
+            anchors.bottomMargin: 16
+            anchors.leftMargin: -50
+            onIndexChanged: function (index, indexValue) {
+                gameView.currentIndex = index
+            }
+            transitions:[ 
+                Transition {
+                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                }
+            ]            
         }
 
         /**
@@ -134,9 +165,29 @@ Item {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            anchors.leftMargin: showIndex ? 50 : 0
             clip: true
              
+
+            states: [ 
+                State{
+                    name: "hidden"; when: !showIndex
+                    PropertyChanges { target: listIndex; anchors.leftMargin: -50}
+                    PropertyChanges { target: games; anchors.leftMargin: 0}
+                },
+
+                State{
+                    name: "active"; when: showIndex
+                    PropertyChanges { target: listIndex; anchors.leftMargin: 24}
+                    PropertyChanges { target: games; anchors.leftMargin: 32}
+                }
+            ]    
+
+            transitions:[ 
+                Transition {
+                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                }
+            ]     
+
             ListView {
               id: gameView
               model: items
@@ -151,6 +202,9 @@ Item {
               anchors.top: parent.top
               currentIndex: defaultIndex
               snapMode: ListView.SnapOneItem
+              preferredHighlightBegin: 0; preferredHighlightEnd: 0
+              highlightRangeMode: maintainFocusTop ? ListView.ApplyRange : ListView.NoHighlightRange
+
               highlightMoveDuration: 0
               focus: listContent.activeFocus
                 Keys.onUpPressed: { 
@@ -334,16 +388,35 @@ Item {
             color: "transparent"
             width: 320
             height: parent.height
+            anchors.rightMargin: 0
             anchors.right: parent.right
             anchors.top: header.top
             anchors.bottom: parent.bottom
             z: 2001
 
+            states: [ 
+                State{
+                    name: "indexHidden"; when: !showIndex
+                    PropertyChanges { target: game_detail; anchors.rightMargin: 0}
+                },
+
+                State{
+                    name: "indexActive"; when: showIndex
+                    PropertyChanges { target: game_detail; anchors.rightMargin: -16}
+                }
+            ]    
+
+            transitions:[ 
+                Transition {
+                    NumberAnimation { properties: "anchors.rightMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                }
+            ]   
+
             BoxArt {
                 id: game_box_art
                 asset: selectedGame && gameView.currentIndex >= 0 && !focusSeeAll ? selectedGame.assets.boxFront : ""
                 context: currentCollection.shortName + listContent.context
-            }
+             }
 
         }
     }

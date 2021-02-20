@@ -2,6 +2,7 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
+    id: gamesPage
     anchors.leftMargin: 200 
     
     property var showSort : false
@@ -68,6 +69,9 @@ Item {
         currentIndex = collectionListIndex
     }
 
+    property var isFavoritesList: {
+        return (collectionFilterMode == "favorites" && !collectionShowAllItems)
+    } 
 
     function onSeeAllEvent() {        
         setCollectionListIndex(0)
@@ -98,10 +102,12 @@ Item {
                 backSound.play()
             } else if (collectionShowAllItems) {
                 gameList.currentIndex = -1
+                gameList.showIndex = false
                 gameList.box_art.initialLoad = true
                 setCollectionShowAllItems(false)
                 backSound.play()
             } else {
+                gameList.showIndex = false
                 gameList.currentIndex = -1
                 gameList.box_art.initialLoad = true
                 navigate('HomePage');
@@ -327,9 +333,10 @@ Item {
             anchors.bottom: parent.bottom
             gamesColor: systemColor            
             items:  gamesItems
+            indexItems: gamesPage.isFavoritesList ? currentFavorites : currentCollection.games
             context: collectionShowAllItems ? "all" : "default"
-            showSeeAll: collectionFilterMode == "favorites" && !collectionShowAllItems
-            hideFavoriteIcon: collectionFilterMode == "favorites" && !collectionShowAllItems
+            showSeeAll: gamesPage.isFavoritesList
+            hideFavoriteIcon: gamesPage.isFavoritesList
             onSeeAll: onSeeAllEvent
             focus: true
         }
