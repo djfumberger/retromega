@@ -35,9 +35,16 @@ Item {
     property var showIndex : false
     property var focusSeeAll : false
     property var maintainFocusTop : false
+
+    // Sort mode that the items have applied to them.
+    // Is used to determine how to show the quick index.
+    // Doesn't actually apply the sort to the collection.
+    property var sortMode: "title"
+    property var sortDirection: 0
+
     property var selectSeeAll : {
         if (showSeeAll) {
-            if (focusSeeAll) {
+            if (focusSeeAll && !showIndex) {
                 return true
             } else {
                 if (items.count == 1 && !items.get(0).modelData) {
@@ -53,7 +60,7 @@ Item {
 
     property var showSeeAll : false
     property var onSeeAll : { }
-    property var onIndexChanged : function(title, index, total) {
+    property var onIndexChanged : function(title, index) {
         
     }
 
@@ -76,11 +83,6 @@ Item {
 
     Keys.onPressed: {
         // Show / Hide Index
-        if (api.keys.isPageUp(event)) {
-            event.accepted = true;
-            showIndex = !showIndex
-            return;
-        }  
         if (api.keys.isAccept(event) && showIndex) {
             event.accepted = true;
             showIndex = false;
@@ -137,6 +139,8 @@ Item {
             width: 30
             focus: showIndex
             active: showIndex
+            alpha: sortMode == "title" 
+            reversed: sortDirection == 1
             listItems: indexItems // Faster to avoid using sortproxymodel 
             anchors.topMargin: 16
             anchors.bottomMargin: 16
@@ -146,7 +150,7 @@ Item {
             }
             transitions:[ 
                 Transition {
-                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 250  }
                 }
             ]            
         }
@@ -171,20 +175,20 @@ Item {
             states: [ 
                 State{
                     name: "hidden"; when: !showIndex
-                    PropertyChanges { target: listIndex; anchors.leftMargin: -50}
+                    PropertyChanges { target: listIndex; anchors.leftMargin: -32}
                     PropertyChanges { target: games; anchors.leftMargin: 0}
                 },
 
                 State{
                     name: "active"; when: showIndex
                     PropertyChanges { target: listIndex; anchors.leftMargin: 24}
-                    PropertyChanges { target: games; anchors.leftMargin: 32}
+                    PropertyChanges { target: games; anchors.leftMargin: 40}
                 }
             ]    
 
             transitions:[ 
                 Transition {
-                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                    NumberAnimation { properties: "anchors.leftMargin"; easing.type: Easing.OutCubic; duration: 250  }
                 }
             ]     
 
@@ -408,7 +412,7 @@ Item {
 
             transitions:[ 
                 Transition {
-                    NumberAnimation { properties: "anchors.rightMargin"; easing.type: Easing.OutCubic; duration: 350  }
+                    NumberAnimation { properties: "anchors.rightMargin"; easing.type: Easing.OutCubic; duration: 250  }
                 }
             ]   
 

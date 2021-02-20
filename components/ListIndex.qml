@@ -2,6 +2,10 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
+
+    property var alpha: bool = true
+    property var reversed: bool = false
+
     id: listIndex 
     property var active: false
     property var listItems: []
@@ -18,29 +22,50 @@ Item {
         if (!active) {
             return
         }
-        // Populate items
+
         var keyItems = []
         var keyItemIndexes = []
-        var lastKey = ""
 
-        // Faster to convert to var array than go through the model.
-        var varray = listItems//.toVarArray()
+        // For alpha sorted lists, show an index based on available letters
+        if (alpha) {
 
-        for (var i = 0; i < varray.count; i++) {
-            var title = varray.get(i).title
-            var firstChar = title.charAt(0).toUpperCase()
+            // Populate items
+            var lastKey = ""
 
-            // Don't split out numbers
-            if (parseInt(firstChar) == firstChar) {
-                firstChar = "0"
+            // Faster to convert to var array than go through the model.
+            const varray = listItems
+
+            for (var i = 0; i < varray.count; i++) {
+                var title = varray.get(i).title
+                var firstChar = title.charAt(0).toUpperCase()
+
+                // Don't split out numbers
+                if (parseInt(firstChar) == firstChar) {
+                    firstChar = "0"
+                }
+
+                if (firstChar != lastKey) {
+                    keyItems.push(firstChar)
+                    keyItemIndexes.push(i)
+                    lastKey = firstChar
+                }
             }
 
-            if (firstChar != lastKey) {
-                keyItems.push(firstChar)
-                keyItemIndexes.push(i)
-                lastKey = firstChar
+            if (reversed) {
+                keyItems.reverse()
             }
+
+        // For any other sort order, just show 10 dots.
+        } else {
+            var maxIndex = listItems.count - 1
+            for (var i = 0; i < 9; i++) {
+                keyItems.push("•")                
+                keyItemIndexes.push( Math.min(Math.floor((i / 9) * maxIndex), maxIndex))                
+            }
+            keyItems.push("•")      
+            keyItemIndexes.push(maxIndex)
         }
+
         items = keyItems
         itemIndexes = keyItemIndexes
     }
@@ -126,7 +151,7 @@ Item {
         id: itemDelegate
         Item {
             width: 30
-            height: 37
+            height: 30
             property var selected: {
                 ListView.isCurrentItem && listIndex.activeFocus
             }

@@ -7,6 +7,7 @@ Item {
     
     property var showSort : false
     property alias currentIndex: gameList.currentIndex
+    property alias showIndex: gameList.showIndex
 
     property var footerTitle: {
         return gameList.footerTitle
@@ -90,6 +91,7 @@ Item {
         // Show / Hide Sort
         if (api.keys.isPageDown(event)) {
             event.accepted = true;
+            showIndex = false
             showSort = !showSort
             return;
         }  
@@ -97,17 +99,19 @@ Item {
         // Back to Home            
         if (api.keys.isCancel(event)) {
             event.accepted = true
-            if (showSort) {
+            if (showIndex == true) {
+                showIndex = false
+            } else if (showSort) {
                 showSort = false
                 backSound.play()
             } else if (collectionShowAllItems) {
+                showIndex = false                
                 gameList.currentIndex = -1
-                gameList.showIndex = false
                 gameList.box_art.initialLoad = true
                 setCollectionShowAllItems(false)
                 backSound.play()
             } else {
-                gameList.showIndex = false
+                showIndex = false
                 gameList.currentIndex = -1
                 gameList.box_art.initialLoad = true
                 navigate('HomePage');
@@ -338,6 +342,8 @@ Item {
             showSeeAll: gamesPage.isFavoritesList
             hideFavoriteIcon: gamesPage.isFavoritesList
             onSeeAll: onSeeAllEvent
+            sortMode: collectionSortMode
+            sortDirection: collectionSortDirection
             focus: true
         }
     }
