@@ -3,17 +3,34 @@ import QtGraphicalEffects 1.12
 
 Item {
 
+    id: listIndex 
+
+    // Whether the main list is being sorted by alpha and if it's a ascending / descending sort order.
     property var alpha: bool = true
     property var reversed: bool = false
 
-    id: listIndex 
+    // Whether we're visible or not
     property var active: false
+
+    // What is currently selected in the main list
+    property var selectedItem: null
+    property var selectedItemIndex: 0
+
+    // List items of the main list view.
+    // When alpha sorting, want to avoid passing in a SortProxyModel as this 
+    // seemed slow to iterate over. So the raw collection should be passed in and then
+    // the index will manually handle reversed sort order instead of using the results from a SortProxyModel.
     property var listItems: []
+
+    // Items to show in the index
     property var items: {
         return ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     }
+
+    // Indexes of the list items that correspond with the item in the index list
     property var itemIndexes: []
 
+    // Callback 
     property var onIndexChanged: function (collectionIndex, index, indexValue) {
 
     }
@@ -26,34 +43,41 @@ Item {
         var keyItems = []
         var keyItemIndexes = []
 
+        
+        // Defines the list view index to select in the quick index
+        var selectedIndex = 0
+
         // For alpha sorted lists, show an index based on available letters
         if (alpha) {
+            var selectedItemTitle = selectedItem ? selectedItem.title : "A"
 
             // Populate items
             var lastKey = ""
 
-            // Faster to convert to var array than go through the model.
-            const varray = listItems
-
-            for (var i = 0; i < varray.count; i++) {
-                var title = varray.get(i).title
+            for (var i = 0; i < listItems.count; i++) {
+                var title = listItems.get(i).title
                 var firstChar = title.charAt(0).toUpperCase()
 
                 // Don't split out numbers
                 if (parseInt(firstChar) == firstChar) {
-                    firstChar = "0"
+                    firstChar = "#"
                 }
 
                 if (firstChar != lastKey) {
                     keyItems.push(firstChar)
                     keyItemIndexes.push(i)
                     lastKey = firstChar
+
+                    if (selectedItemTitle.charAt(0).toUpperCase() == firstChar) {
+                        selectedIndex = keyItems.length - 1
+                    }
                 }
             }
 
             if (reversed) {
                 keyItems.reverse()
-            }
+                selectedIndex = (keyItems.length - 1) - selectedIndex
+            } 
 
         // For any other sort order, just show 10 dots.
         } else {
@@ -62,12 +86,15 @@ Item {
                 keyItems.push("•")                
                 keyItemIndexes.push( Math.min(Math.floor((i / 9) * maxIndex), maxIndex))                
             }
+
             keyItems.push("•")      
             keyItemIndexes.push(maxIndex)
+            selectedIndex = Math.max(Math.min(Math.round((selectedItemIndex / listItems.count) * 9), 9), 0)
         }
 
         items = keyItems
         itemIndexes = keyItemIndexes
+        listView.currentIndex = selectedIndex
     }
 
 

@@ -141,6 +141,8 @@ Item {
             active: showIndex
             alpha: sortMode == "title" 
             reversed: sortDirection == 1
+            selectedItem: selectedGame
+            selectedItemIndex: gameView.currentIndex
             listItems: indexItems // Faster to avoid using sortproxymodel 
             anchors.topMargin: 16
             anchors.bottomMargin: 16
