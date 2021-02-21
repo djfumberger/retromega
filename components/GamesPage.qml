@@ -2,9 +2,12 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
-
+    id: gamesPage
+    anchors.leftMargin: 200 
+    
     property var showSort : false
     property alias currentIndex: gameList.currentIndex
+    property alias showIndex: gameList.showIndex
 
     property var footerTitle: {
         return gameList.footerTitle
@@ -18,6 +21,7 @@ Item {
         return (collectionShowAllItems) ? "All " + currentCollection.name : currentCollection.name
     }
     
+    property var showIndex: false
     property var collectionSortTitle: {
         var title = "Title"
         switch (collectionSortMode) {
@@ -66,6 +70,9 @@ Item {
         currentIndex = collectionListIndex
     }
 
+    property var isFavoritesList: {
+        return (collectionFilterMode == "favorites" && !collectionShowAllItems)
+    } 
 
     function onSeeAllEvent() {        
         setCollectionListIndex(0)
@@ -84,6 +91,7 @@ Item {
         // Show / Hide Sort
         if (api.keys.isPageDown(event)) {
             event.accepted = true;
+            showIndex = false
             showSort = !showSort
             return;
         }  
@@ -91,15 +99,19 @@ Item {
         // Back to Home            
         if (api.keys.isCancel(event)) {
             event.accepted = true
-            if (showSort) {
+            if (showIndex == true) {
+                showIndex = false
+            } else if (showSort) {
                 showSort = false
                 backSound.play()
             } else if (collectionShowAllItems) {
+                showIndex = false                
                 gameList.currentIndex = -1
                 gameList.box_art.initialLoad = true
                 setCollectionShowAllItems(false)
                 backSound.play()
             } else {
+                showIndex = false
                 gameList.currentIndex = -1
                 gameList.box_art.initialLoad = true
                 navigate('HomePage');
@@ -325,10 +337,13 @@ Item {
             anchors.bottom: parent.bottom
             gamesColor: systemColor            
             items:  gamesItems
+            indexItems: gamesPage.isFavoritesList ? currentFavorites : currentCollection.games
             context: collectionShowAllItems ? "all" : "default"
-            showSeeAll: collectionFilterMode == "favorites" && !collectionShowAllItems
-            hideFavoriteIcon: collectionFilterMode == "favorites" && !collectionShowAllItems
+            showSeeAll: gamesPage.isFavoritesList
+            hideFavoriteIcon: gamesPage.isFavoritesList
             onSeeAll: onSeeAllEvent
+            sortMode: collectionSortMode
+            sortDirection: collectionSortDirection
             focus: true
         }
     }

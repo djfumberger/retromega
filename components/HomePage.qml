@@ -5,20 +5,39 @@ Item {
     id: homepage  
     width: parent.width
     height: parent.height
-    
-    property var footerTitle: {
+
+    property var currentView: {
         switch (currentHomeIndex) {
         case 0: 
-            return systemsListView.footerTitle
+            return systemsListView
         case 1:
-            return favoriteView.footerTitle
+            return favoriteView
         case 2: 
-            return recentsView.footerTitle
+            return recentsView
         case 3:
-            return appsView.footerTitle
+            return appsView
         default: 
             return ""
         }
+    }
+
+    property var currentContentView: {
+        switch (currentHomeIndex) {
+        case 0: 
+            return systemsListView
+        case 1:
+            return favoritesLoader.item
+        case 2: 
+            return recentsLoader.item
+        case 3:
+            return appsLoader.item
+        default: 
+            return null
+        }
+    }
+
+    property var footerTitle: {
+        return currentContentView.footerTitle
     }
 
     Keys.onPressed: {                                            
@@ -77,7 +96,11 @@ Item {
         Keys.onPressed: {                                            
             // Back to Home            
             if (api.keys.isCancel(event)) {
-                header.focused_link.forceActiveFocus()
+                if (currentContentView && currentContentView.showIndex) {
+                    currentContentView.showIndex = false
+                } else {
+                    header.focused_link.forceActiveFocus()
+                }
                 event.accepted = true;                    
             } else {
                 event.accepted = false;                
@@ -115,9 +138,12 @@ Item {
                 Component {
                     id: favoriteView                    
                     GamesList {
+                        id: favoritesContentView
                         width: parent.width
                         height: parent.height
-                        items: allFavorites      
+                        items: allFavorites   
+                        indexItems: allFavorites   
+                        sortMode: "title"
                         focus: true
                         hideFavoriteIcon: true
                     }
@@ -137,9 +163,12 @@ Item {
                 Component {
                     id: recentsView                    
                     GamesList {
+                        id: recentsContentView
                         width: parent.width
                         height: parent.height
                         items: allRecentlyPlayed      
+                        indexItems: allRecentlyPlayed
+                        sortMode: "recent"
                         focus: true
                     }
                 }
@@ -158,9 +187,12 @@ Item {
                 Component {
                     id: appsView                    
                     GamesList {
+                        id: appsContentView
                         width: parent.width
                         height: parent.height
                         items: androidCollection.games      
+                        indexItems: androidCollection.games
+                        sortMode: "title"
                         visible: currentHomeIndex == 3
                         focus: currentHomeIndex == 3
                     }          
