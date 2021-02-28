@@ -143,14 +143,9 @@ Item {
                     KeyNavigation.right: actionFavorite   
                     KeyNavigation.down: gameDetailText
                     Keys.onPressed: {           
-                        // Back to Home     
-                        
+                        // Back to Home                             
                         if (api.keys.isAccept(event)) {
-                            console.log("play")      
-                            
-                            var g = gamesItems.get(gameList.currentIndex)
-                            console.log(g.modelData) 
-                            g.modelData.launch()
+                            game.modelData.launch()
                         }
                     }
 
@@ -169,11 +164,9 @@ Item {
                     Keys.onPressed: {    
                          
                         // Back to Home            
-                        if (api.keys.isAccept(event)) {
-                            
+                        if (api.keys.isAccept(event)) {                            
                             game.modelData.favorite = !game.modelData.favorite
                             event.accepted = true;
-                            console.log("fav")      
                         }
                     }
 

@@ -231,10 +231,10 @@ Item {
 
             ButtonLegend {
                 id: button_legend_details
-                title: "Favorite"
+                title: "Details"
                 key: "X"
                 width: 75
-                visible: collectionFilterMode == "all" || collectionShowAllItems
+                visible: true//collectionFilterMode == "all" || collectionShowAllItems
                 anchors.left: button_legend_back.right
                 anchors.leftMargin: 24
                 anchors.verticalCenter: parent.verticalCenter
