@@ -25,6 +25,16 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great guide [available h
 * Alternative game views.
 * Add more / missing system cover images.
 
+## Version History
+
+### v0.2 - Feb 21st
+
+* Added 'Quick Index'. Tap left when browsing lists to show an index to allow quick browsing of long lists.
+
+### v0.1
+
+Initial Release
+
 ## License
 
 [![CC-BY-NC-SA](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-nc-sa/4.0/)
