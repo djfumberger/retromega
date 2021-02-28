@@ -6,7 +6,6 @@ Item {
     property var sortColor: "#000000"
 
     states: [ 
-
         State{
             name: "hidden"; when: !active
             PropertyChanges { target: modalContent; anchors.verticalCenterOffset: 480}

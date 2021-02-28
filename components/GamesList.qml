@@ -288,13 +288,13 @@ Item {
                             return;
                         }
 
-                        // Details
-                        if (api.keys.isDetails(event) && !hideFavoriteIcon) {
-                            modelData.favorite = !modelData.favorite
-                            event.accepted = true
-                            navSound.play()                       
-                            return
-                        }
+                        // // Details
+                        // if (api.keys.isDetails(event) && !hideFavoriteIcon) {
+                        //     modelData.favorite = !modelData.favorite
+                        //     event.accepted = true
+                        //     navSound.play()                       
+                        //     return
+                        // }
 
                         //Next page
                         if (api.keys.isNextPage(event)) {
