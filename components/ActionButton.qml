@@ -29,6 +29,7 @@ Item {
         font.pixelSize: 14
         visible: parent.activeFocus
         opacity: 0.5
+        color: textColor
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -20
         anchors.horizontalCenter: parent.horizontalCenter

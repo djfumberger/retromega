@@ -111,6 +111,29 @@ FocusScope {
         currentPage = page
     }
 
+    property var currentGameDetail : null
+    property var isShowingGameDetail : false
+    function showGameDetail(game) {
+        currentGameDetail = game
+        if (game) {
+            isShowingGameDetail = true
+        } else {
+            isShowingGameDetail = false
+        }
+    }
+
+    function startGame(game) {
+        
+    }
+    
+    property var systemColor: {
+        if (currentPage === 'GamesPage') {
+            return systemColors[currentCollection.shortName] || "#000000" 
+        } else {
+            return "#000000"
+        }
+    }
+
     property var theme : {
         "background": "#F3F3F3",
         "text":"#70000000",
@@ -307,7 +330,28 @@ FocusScope {
         Components.GamesPage {
             id: gamesPage
             visible: currentPage === 'GamesPage' ? 1 : 0 ;
-        }  
+        } 
+
+        // Game Detail
+        Component {
+            id: gameDetail           
+            Components.GameDetail {
+                visible: isShowingGameDetail         
+                id: gameDetailContentView
+                anchors.fill: parent
+                active: currentGameDetail != null
+                game: currentGameDetail
+            }
+        }
+
+        Loader  {
+            id: gameDetailLoader
+            focus: isShowingGameDetail
+            active:  isShowingGameDetail
+            anchors.fill: parent
+            sourceComponent: gameDetail
+            asynchronous: false
+        }   
           
     }   
 }

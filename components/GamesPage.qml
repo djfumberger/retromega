@@ -6,17 +6,13 @@ Item {
     anchors.leftMargin: 200 
     
     property var showSort       : false
-    property var showGameDetail : false
+    //property var showGameDetail : false
 
     property alias currentIndex: gameList.currentIndex
     property alias showIndex: gameList.showIndex
 
     property var footerTitle: {
         return gameList.footerTitle
-    }
-    
-    property var systemColor: {
-        systemColors[currentCollection.shortName] || "#000000" 
     }
 
     property var headerTitle: {
@@ -98,20 +94,14 @@ Item {
             return;
         }  
 
-        // Details
-        if (api.keys.isDetails(event)) {
-            event.accepted = true
-            showGameDetail = true
-            return
-        }
-
         // Back to Home            
         if (api.keys.isCancel(event)) {
             event.accepted = true
-            if (showGameDetail) {
-                showGameDetail = false
+            //if (showGameDetail) {
+                //showGameDetail(null)
+                //showGameDetail = false
                 //listFocus.focus = true   
-            } else if (showIndex == true) {
+            if (showIndex == true) {
                 showIndex = false
             } else if (showSort) {
                 showSort = false
@@ -348,7 +338,7 @@ Item {
          */
         FocusScope {
             id: listFocus
-            focus: currentPage === "GamesPage" && !showSort && !showGameDetail ? true : false ;
+            focus: currentPage === "GamesPage" && !showSort && !isShowingGameDetail ? true : false ;
             width: parent.width
             height: parent.height
             anchors.top: header.bottom
@@ -370,7 +360,7 @@ Item {
                 onSeeAll: onSeeAllEvent
                 sortMode: collectionSortMode
                 sortDirection: collectionSortDirection
-                focus: true
+                focus: true  && !isShowingGameDetail
             }
         }
     }
@@ -378,11 +368,5 @@ Item {
     SortModal {
         active: showSort
         sortColor: systemColor
-    }
-
-    GameDetail {
-        anchors.fill: parent
-        active: showGameDetail
-        game: gameList.selectedGame
     }
 }

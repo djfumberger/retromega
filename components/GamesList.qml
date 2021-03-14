@@ -83,6 +83,13 @@ Item {
 
     Keys.onPressed: {
         // Show / Hide Index
+        // Details
+        if (api.keys.isDetails(event)) {
+            event.accepted = true
+            showGameDetail(selectedGame)
+            return
+        }
+
         if (api.keys.isAccept(event) && showIndex) {
             event.accepted = true;
             showIndex = false;
@@ -212,7 +219,7 @@ Item {
               highlightRangeMode: maintainFocusTop ? ListView.ApplyRange : ListView.NoHighlightRange
 
               highlightMoveDuration: 0
-              focus: listContent.activeFocus
+              focus: listContent.activeFocus && !isShowingGameDetail
                 Keys.onUpPressed: { 
                     if (focusSeeAll) {
                         focusSeeAll = false

@@ -19,12 +19,15 @@ Item {
         var s = g.split(',')
         return s[0]
     }
+    
     property var players: {
         return game.players + " Player" + (game.players > 1 ? "s" : "") + ", "
     }
+
     property var releaseDate: {
         return "Released " + game.releaseYear
     }
+
     property var developedBy: {
         return "Developed By " + game.developer
     }
@@ -32,11 +35,20 @@ Item {
     property var textColor: {
         return "#333333"
     }
+
     property var margin: {
         return 32
     }
+
     property var introDescription: {
         return game.description.replace("\n"," ")
+    }
+
+    Keys.onPressed: {      
+        if (api.keys.isCancel(event) && active) {
+            event.accepted = true
+            showGameDetail(false)
+        }
     }
 
     /** 
