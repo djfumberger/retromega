@@ -124,11 +124,13 @@ FocusScope {
 
     property var currentGameDetail : null
     property var isShowingGameDetail : false
-    function showGameDetail(game) {        
+    function showGameDetail(game) {                
         if (game) {
+            forwardSound.play()
             currentGameDetail = game
             isShowingGameDetail = true
         } else {
+            backSound.play()
             isShowingGameDetail = false
         }
     }
