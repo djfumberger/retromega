@@ -29,7 +29,6 @@ Item {
     property alias box_art : game_box_art
     property var hideFavoriteIcon : false
     property var defaultIndex: 0
-    property var launchingGame : false
     property var items : []
     property var indexItems : []
     property var showIndex : false
@@ -116,19 +115,7 @@ Item {
     function updatedIndex() {
         onIndexChanged(gameView.currentIndex, items.count)
     }
-
-    Timer {
-        id: timer
-    }
-
-    function delay(delayTime, cb) {
-        timer.interval = delayTime;
-        timer.repeat = false;
-        timer.triggered.connect(cb);
-        timer.start();
-    }
-
-
+    
     Rectangle {
         id: mainListContent
         color: "transparent"
@@ -283,14 +270,8 @@ Item {
                                 onSeeAll()
                             } else {
                                 currentGameIndex = index
-                                launchSound.play()
-                                launchingGame = true
-
-                                setCollectionListIndex(index)
-
-                                delay(400, function() {
-                                    modelData.launch()
-                                })                  
+                                startGame(modelData)
+                                setCollectionListIndex(index)                                                
                             }                            
                             return;
                         }
@@ -362,39 +343,7 @@ Item {
             }
 
         }
-
-        /**
-         Loading Overlay
-        */
-        Rectangle {
-            id: loading_overlay
-            opacity: 0.0
-            color: "#000000"
-            anchors {
-                fill: parent
-                bottomMargin: -100
-                topMargin: -100
-            }
-            states: [ 
-
-                State{
-                  name: "default"; when: !launchingGame
-                  PropertyChanges { target: loading_overlay; opacity: 0.0}
-                },
-
-                State{
-                  name: "active"; when: launchingGame
-                  PropertyChanges { target: loading_overlay; opacity: 1.0}
-                }
-
-            ]
-
-            transitions: Transition {
-                NumberAnimation { properties: "opacity"; easing.type: Easing.Out; duration: 350  }
-            }            
-            z: 2002
-        }        
-
+          
         Rectangle {
             id: game_detail
             visible: true

@@ -8,6 +8,17 @@ import 'components' as Components
 FocusScope {
     id: root  
     
+    Timer {
+        id: timer
+    }
+
+    function delay(delayTime, cb) {
+        timer.interval = delayTime;
+        timer.repeat = false;
+        timer.triggered.connect(cb);
+        timer.start();
+    }
+
     Component.onCompleted: { 
         currentHomeIndex = api.memory.get('homeIndex') ?? 0
         currentCollectionIndex = api.memory.get('currentCollectionIndex') ?? 0
@@ -19,7 +30,7 @@ FocusScope {
         collectionShowAllItems =  api.memory.get('collectionShowAllItems') ?? false
         startSound.play()
     }
-  
+
     // Collection index
     property var currentCollectionIndex : 0
     property var currentCollection: {
@@ -113,17 +124,23 @@ FocusScope {
 
     property var currentGameDetail : null
     property var isShowingGameDetail : false
-    function showGameDetail(game) {
-        currentGameDetail = game
+    function showGameDetail(game) {        
         if (game) {
+            currentGameDetail = game
             isShowingGameDetail = true
         } else {
             isShowingGameDetail = false
         }
     }
 
+    // When the game is launching
+    property var launchingGame : false
     function startGame(game) {
-
+        launchSound.play()
+        launchingGame = true
+        delay(400, function() {
+            game.launch()
+        })  
     }
     
     property var systemColor: {
@@ -321,6 +338,8 @@ FocusScope {
         height: layoutScreen.height
         anchors.top: parent.top
 
+
+
         // Home Page
         Components.HomePage {
             visible: currentPage === 'HomePage' ? 1 : 0 ;
@@ -330,28 +349,75 @@ FocusScope {
         Components.GamesPage {
             id: gamesPage
             visible: currentPage === 'GamesPage' ? 1 : 0 ;
+            opacity: 1.0
+            transitions: Transition {
+                NumberAnimation { properties: "opacity"; easing.type: Easing.InCubic; duration: 200  }
+            }             
+
+         
         } 
 
         // Game Detail
         Component {
             id: gameDetail           
             Components.GameDetail {
-                visible: isShowingGameDetail         
+                //visible: isShowingGameDetail         
                 id: gameDetailContentView
-                anchors.fill: parent
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.rightMargin: 0
+                anchors.leftMargin: 0
+                opacity: 1.0
                 active: isShowingGameDetail
                 game: currentGameDetail
+
+                transitions: Transition {
+                    NumberAnimation { properties: "opacity"; easing.type: Easing.OutCubic; duration: 1600  }
+                } 
+
             }
+
         }
 
         Loader  {
             id: gameDetailLoader
             focus: isShowingGameDetail
-            active:  true
+            active:  isShowingGameDetail
             anchors.fill: parent
             sourceComponent: gameDetail
             asynchronous: false
         }   
           
     }   
+
+    /**
+        Loading Game Overlay
+    */
+    Rectangle {
+        id: loading_overlay
+        opacity: 0.0
+        color: "#000000"
+        anchors {
+            fill: parent
+        }
+        states: [ 
+
+            State{
+                name: "default"; when: !launchingGame
+                PropertyChanges { target: loading_overlay; opacity: 0.0}
+            },
+
+            State{
+                name: "active"; when: launchingGame
+                PropertyChanges { target: loading_overlay; opacity: 1.0}
+            }
+
+        ]
+
+        transitions: Transition {
+            NumberAnimation { properties: "opacity"; easing.type: Easing.Out; duration: 350  }
+        }            
+        z: 2002
+    }          
 }

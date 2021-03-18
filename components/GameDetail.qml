@@ -183,7 +183,7 @@ Item {
                     Keys.onPressed: {           
                         // Back to Home                             
                         if (api.keys.isAccept(event)) {
-                            game.modelData.launch()
+                            startGame(game.modelData)
                         }
                     }
 
@@ -201,7 +201,7 @@ Item {
 
                     Keys.onPressed: {    
                          
-                        // Back to Home            
+                        // Favorite          
                         if (api.keys.isAccept(event)) {                            
                             game.modelData.favorite = !game.modelData.favorite
                             event.accepted = true;
@@ -241,6 +241,16 @@ Item {
             //height: 100
             height: 127
 
+            Rectangle {
+                anchors.fill: parent
+                anchors.leftMargin: -15
+                anchors.rightMargin: -15
+                anchors.bottomMargin: -15
+                radius: 8
+                color: "#000000"
+                opacity: parent.activeFocus ? 0.1 : 0.0
+            }
+
             Keys.onPressed: {           
                 // Back to Home            
                 if (api.keys.isAccept(event)) {
@@ -255,7 +265,7 @@ Item {
                 height: 1
                 anchors.top: parent.top
                 color: textColor
-                opacity: 0.1
+                opacity: parent.activeFocus ? 0.0 : 0.1
             }
 
             // Rectangle {
@@ -275,7 +285,8 @@ Item {
                 anchors.leftMargin: parent.left
                 anchors.rightMargin: parent.right
                 wrapMode: Text.WordWrap
-                color: parent.activeFocus ? "#50000000" : textColor
+                //color: parent.activeFocus ? "#50000000" : textColor
+                color: textColor
                 font.pixelSize: 18
                 font.letterSpacing: -0.1
                 font.bold: true  
