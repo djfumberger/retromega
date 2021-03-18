@@ -85,7 +85,7 @@ Item {
         // Details
         if (api.keys.isDetails(event)) {
             event.accepted = true
-            showGameDetail(selectedGame)
+            showGameDetail(selectedGame, gameView.currentIndex)
             return
         }
 
@@ -115,7 +115,7 @@ Item {
     function updatedIndex() {
         onIndexChanged(gameView.currentIndex, items.count)
     }
-    
+
     Rectangle {
         id: mainListContent
         color: "transparent"
@@ -269,9 +269,7 @@ Item {
                                 //gameView.currentIndex = 0
                                 onSeeAll()
                             } else {
-                                currentGameIndex = index
-                                startGame(modelData)
-                                setCollectionListIndex(index)                                                
+                                startGame(modelData, index)                                         
                             }                            
                             return;
                         }

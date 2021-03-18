@@ -182,9 +182,9 @@ Item {
                     KeyNavigation.right: actionFavorite   
                     KeyNavigation.down: gameDetailText
                     Keys.onPressed: {           
-                        // Back to Home                             
+                        // Start Game           
                         if (api.keys.isAccept(event)) {
-                            startGame(game.modelData)
+                            startGame(game.modelData, currentGameDetailIndex)
                         }
                     }
 

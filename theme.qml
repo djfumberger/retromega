@@ -123,11 +123,13 @@ FocusScope {
     }
 
     property var currentGameDetail : null
+    property var currentGameDetailIndex : 0
     property var isShowingGameDetail : false
-    function showGameDetail(game) {                
+    function showGameDetail(game, index) {                
         if (game) {
             forwardSound.play()
             currentGameDetail = game
+            currentGameDetailIndex = index
             isShowingGameDetail = true
         } else {
             backSound.play()
@@ -137,7 +139,9 @@ FocusScope {
 
     // When the game is launching
     property var launchingGame : false
-    function startGame(game) {
+    function startGame(game, index) {
+        currentGameIndex = index
+        setCollectionListIndex(index)       
         launchSound.play()
         launchingGame = true
         delay(400, function() {
