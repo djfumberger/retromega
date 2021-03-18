@@ -123,7 +123,7 @@ FocusScope {
     }
 
     function startGame(game) {
-        
+
     }
     
     property var systemColor: {
@@ -339,7 +339,7 @@ FocusScope {
                 visible: isShowingGameDetail         
                 id: gameDetailContentView
                 anchors.fill: parent
-                active: currentGameDetail != null
+                active: isShowingGameDetail
                 game: currentGameDetail
             }
         }
@@ -347,7 +347,7 @@ FocusScope {
         Loader  {
             id: gameDetailLoader
             focus: isShowingGameDetail
-            active:  isShowingGameDetail
+            active:  true
             anchors.fill: parent
             sourceComponent: gameDetail
             asynchronous: false

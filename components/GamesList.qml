@@ -219,7 +219,7 @@ Item {
               highlightRangeMode: maintainFocusTop ? ListView.ApplyRange : ListView.NoHighlightRange
 
               highlightMoveDuration: 0
-              focus: listContent.activeFocus && !isShowingGameDetail
+              focus: listContent.activeFocus
                 Keys.onUpPressed: { 
                     if (focusSeeAll) {
                         focusSeeAll = false

@@ -8,10 +8,10 @@ Item {
     property var active: false
     property var game: null
     property var showFullDescription: false
-    visible: active
+    //visible: active
 
     onGameChanged: {
-        console.log(game.assets.video)
+        //console.log(game.assets.video)
     }
 
     property var mainGenre: {
@@ -21,14 +21,17 @@ Item {
     }
     
     property var players: {
+        if (!game) { return "" }
         return game.players + " Player" + (game.players > 1 ? "s" : "") + ", "
     }
 
     property var releaseDate: {
+        if (!game) { return "" }
         return "Released " + game.releaseYear
     }
 
     property var developedBy: {
+        if (!game) { return "" }
         return "Developed By " + game.developer
     }
 
@@ -41,7 +44,30 @@ Item {
     }
 
     property var introDescription: {
+        if (!game) { return "" }    
         return game.description.replace("\n"," ")
+    }
+
+    property var gameIsFavorite: {
+        if (game) {
+            return game.modelData.favorite
+        } else {
+            return false
+        }
+    }
+    property var gameScreenshot: {
+        if (game) {
+            return game.assets.screenshot
+        } else {
+            return null
+        }
+    }
+    property var gameVideo: {
+        if (game) {
+            return game.assets.video
+        } else {
+            return null
+        }
     }
 
     Keys.onPressed: {      
@@ -90,7 +116,7 @@ Item {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 maximumLineCount: 2
-                text: game.title
+                text: game ? game.title : "No Game"
                 lineHeight: 1.1
                 color: textColor
                 font.pixelSize: 24
@@ -167,8 +193,8 @@ Item {
                     textColor: gameDetail.textColor
                     KeyNavigation.left: actionPlay  
                     KeyNavigation.down: gameDetailText   
-                    title: game.modelData.favorite ? "Unfavorite" : "Favorite"
-                    icon: game.modelData.favorite ? "favorite-on" : "favorite-off"
+                    title: gameIsFavorite ? "Unfavorite" : "Favorite"
+                    icon: gameIsFavorite ? "favorite-on" : "favorite-off"
                     focus: false
                     height: 40
                     width: 120
@@ -193,8 +219,8 @@ Item {
                 width: 280
                 anchors.right: parent.right
                 anchors.top: parent.top                 
-                screenshot: game.assets.screenshot
-                video: game.assets.video
+                screenshot: gameScreenshot
+                video: gameVideo
                 active: gameDetail.active
             }
 
@@ -349,7 +375,7 @@ Item {
 
         Image {
             id: boxart
-            source: game.assets.screenshot  
+            source: gameScreenshot 
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
             visible: false

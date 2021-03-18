@@ -11,6 +11,14 @@ Item {
     width: parent.width
     height: parent.height
     property var active: false
+    onActiveChanged: {
+        if (video && active) {
+            videoPlayer.play()
+        } else {
+            videoPlayer.stop()
+        }
+    }
+
     // Shadow. Using an image for better shadow visuals & performance.
     Image {
         id: game_box_shadow
@@ -33,9 +41,10 @@ Item {
         }
 
         Video {
+            id: videoPlayer
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
-            source: active ? video : null
+            source: video
             autoPlay: true
             loops: MediaPlayer.Infinite 
         }
