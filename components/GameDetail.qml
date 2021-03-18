@@ -69,6 +69,7 @@ Item {
             return null
         }
     }
+        property var textScroll: 10
 
     Keys.onPressed: {      
         if (api.keys.isCancel(event) && active) {
@@ -241,15 +242,15 @@ Item {
             //height: 100
             height: 127
 
-            Rectangle {
-                anchors.fill: parent
-                anchors.leftMargin: -15
-                anchors.rightMargin: -15
-                anchors.bottomMargin: -15
-                radius: 8
-                color: "#000000"
-                opacity: parent.activeFocus ? 0.1 : 0.0
-            }
+            // Rectangle {
+            //     anchors.fill: parent
+            //     anchors.leftMargin: -15
+            //     anchors.rightMargin: -15
+            //     anchors.bottomMargin: -15
+            //     radius: 8
+            //     color: "#000000"
+            //     opacity: parent.activeFocus ? 0.1 : 0.0
+            // }
 
             Keys.onPressed: {           
                 // Back to Home            
@@ -265,7 +266,7 @@ Item {
                 height: 1
                 anchors.top: parent.top
                 color: textColor
-                opacity: parent.activeFocus ? 0.0 : 0.1
+                opacity: 0.1
             }
 
             // Rectangle {
@@ -368,6 +369,17 @@ Item {
         height: 480
         focus: showFullDescription
 
+        property var scrollMoveAmount : 100
+        Keys.onDownPressed: {
+            var maxHeight =  textElement.paintedHeight - (480 - 50 - 50)
+
+            textScroll = Math.max(Math.min(textScroll + scrollMoveAmount, maxHeight), 10)
+        }
+
+        Keys.onUpPressed: {
+            textScroll = Math.max(textScroll - scrollMoveAmount, 10)
+        }
+
         Keys.onPressed: {           
             // Back to Home            
             if (api.keys.isCancel(event)) {
@@ -377,6 +389,8 @@ Item {
                 }
             }
         }
+
+
 
         Rectangle {
             color: theme.background
@@ -409,19 +423,24 @@ Item {
         // }
 
         Text {
+            id: textElement
             text: game.description
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top            
             anchors.leftMargin: 50
             anchors.rightMargin: 50
-            anchors.topMargin: 50
+            anchors.topMargin: 50 - textScroll
             font.pixelSize: 18
             font.letterSpacing: -0.35
             font.bold: true
             wrapMode: Text.WordWrap
             maximumLineCount: 2000
             lineHeight: 1.2
+
+            Behavior on anchors.topMargin {
+                PropertyAnimation { easing.type: Easing.OutCubic; duration: 200  }
+            }                
         }
         
     }
