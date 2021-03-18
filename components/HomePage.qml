@@ -84,7 +84,7 @@ Item {
 
     FocusScope {
         id: mainFocus
-        focus: currentPage === "HomePage" ? true : false ;
+        focus: currentPage === "HomePage" && !isShowingGameDetail ? true : false ;
 
         anchors {
             left: parent.left
@@ -144,7 +144,7 @@ Item {
                         items: allFavorites   
                         indexItems: allFavorites   
                         sortMode: "title"
-                        focus: true
+                        focus: true && !isShowingGameDetail
                         hideFavoriteIcon: true
                     }
                 }
@@ -169,7 +169,7 @@ Item {
                         items: allRecentlyPlayed      
                         indexItems: allRecentlyPlayed
                         sortMode: "recent"
-                        focus: true
+                        focus: true  && !isShowingGameDetail
                     }
                 }
 
@@ -194,7 +194,7 @@ Item {
                         indexItems: androidCollection.games
                         sortMode: "title"
                         visible: currentHomeIndex == 3
-                        focus: currentHomeIndex == 3
+                        focus: currentHomeIndex == 3 && !isShowingGameDetail
                     }          
                 }
 

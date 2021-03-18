@@ -8,10 +8,10 @@ Item {
     property var active: false
     property var game: null
     property var showFullDescription: false
-    visible: active
+    //visible: active
 
     onGameChanged: {
-        console.log(game.assets.video)
+        //console.log(game.assets.video)
     }
 
     property var mainGenre: {
@@ -19,24 +19,63 @@ Item {
         var s = g.split(',')
         return s[0]
     }
+    
     property var players: {
+        if (!game) { return "" }
         return game.players + " Player" + (game.players > 1 ? "s" : "") + ", "
     }
+
     property var releaseDate: {
+        if (!game) { return "" }
         return "Released " + game.releaseYear
     }
+
     property var developedBy: {
+        if (!game) { return "" }
         return "Developed By " + game.developer
     }
 
     property var textColor: {
         return "#333333"
     }
+
     property var margin: {
         return 32
     }
+
     property var introDescription: {
+        if (!game) { return "" }    
         return game.description.replace("\n"," ")
+    }
+
+    property var gameIsFavorite: {
+        if (game) {
+            return game.modelData.favorite
+        } else {
+            return false
+        }
+    }
+    property var gameScreenshot: {
+        if (game) {
+            return game.assets.screenshot
+        } else {
+            return null
+        }
+    }
+    property var gameVideo: {
+        if (game) {
+            return game.assets.video
+        } else {
+            return null
+        }
+    }
+        property var textScroll: 10
+
+    Keys.onPressed: {      
+        if (api.keys.isCancel(event) && active) {
+            event.accepted = true
+            showGameDetail(false)
+        }
     }
 
     /** 
@@ -78,7 +117,7 @@ Item {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 maximumLineCount: 2
-                text: game.title
+                text: game ? game.title : "No Game"
                 lineHeight: 1.1
                 color: textColor
                 font.pixelSize: 24
@@ -143,14 +182,9 @@ Item {
                     KeyNavigation.right: actionFavorite   
                     KeyNavigation.down: gameDetailText
                     Keys.onPressed: {           
-                        // Back to Home     
-                        
+                        // Start Game           
                         if (api.keys.isAccept(event)) {
-                            console.log("play")      
-                            
-                            var g = gamesItems.get(gameList.currentIndex)
-                            console.log(g.modelData) 
-                            g.modelData.launch()
+                            startGame(game.modelData, currentGameDetailIndex)
                         }
                     }
 
@@ -160,20 +194,18 @@ Item {
                     textColor: gameDetail.textColor
                     KeyNavigation.left: actionPlay  
                     KeyNavigation.down: gameDetailText   
-                    title: game.modelData.favorite ? "Unfavorite" : "Favorite"
-                    icon: game.modelData.favorite ? "favorite-on" : "favorite-off"
+                    title: gameIsFavorite ? "Unfavorite" : "Favorite"
+                    icon: gameIsFavorite ? "favorite-on" : "favorite-off"
                     focus: false
                     height: 40
                     width: 120
 
                     Keys.onPressed: {    
                          
-                        // Back to Home            
-                        if (api.keys.isAccept(event)) {
-                            
+                        // Favorite          
+                        if (api.keys.isAccept(event)) {                            
                             game.modelData.favorite = !game.modelData.favorite
                             event.accepted = true;
-                            console.log("fav")      
                         }
                     }
 
@@ -188,8 +220,8 @@ Item {
                 width: 280
                 anchors.right: parent.right
                 anchors.top: parent.top                 
-                screenshot: game.assets.screenshot
-                video: game.assets.video
+                screenshot: gameScreenshot
+                video: gameVideo
                 active: gameDetail.active
             }
 
@@ -209,6 +241,16 @@ Item {
             anchors.right: parent.right
             //height: 100
             height: 127
+
+            // Rectangle {
+            //     anchors.fill: parent
+            //     anchors.leftMargin: -15
+            //     anchors.rightMargin: -15
+            //     anchors.bottomMargin: -15
+            //     radius: 8
+            //     color: "#000000"
+            //     opacity: parent.activeFocus ? 0.1 : 0.0
+            // }
 
             Keys.onPressed: {           
                 // Back to Home            
@@ -244,7 +286,8 @@ Item {
                 anchors.leftMargin: parent.left
                 anchors.rightMargin: parent.right
                 wrapMode: Text.WordWrap
-                color: parent.activeFocus ? "#50000000" : textColor
+                //color: parent.activeFocus ? "#50000000" : textColor
+                color: textColor
                 font.pixelSize: 18
                 font.letterSpacing: -0.1
                 font.bold: true  
@@ -326,6 +369,17 @@ Item {
         height: 480
         focus: showFullDescription
 
+        property var scrollMoveAmount : 100
+        Keys.onDownPressed: {
+            var maxHeight =  textElement.paintedHeight - (480 - 50 - 50)
+
+            textScroll = Math.max(Math.min(textScroll + scrollMoveAmount, maxHeight), 10)
+        }
+
+        Keys.onUpPressed: {
+            textScroll = Math.max(textScroll - scrollMoveAmount, 10)
+        }
+
         Keys.onPressed: {           
             // Back to Home            
             if (api.keys.isCancel(event)) {
@@ -336,6 +390,8 @@ Item {
             }
         }
 
+
+
         Rectangle {
             color: theme.background
             anchors.fill: parent
@@ -344,7 +400,7 @@ Item {
 
         Image {
             id: boxart
-            source: game.assets.screenshot  
+            source: gameScreenshot 
             anchors.fill: parent
             fillMode: Image.PreserveAspectCrop
             visible: false
@@ -367,19 +423,24 @@ Item {
         // }
 
         Text {
+            id: textElement
             text: game.description
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top            
             anchors.leftMargin: 50
             anchors.rightMargin: 50
-            anchors.topMargin: 50
+            anchors.topMargin: 50 - textScroll
             font.pixelSize: 18
             font.letterSpacing: -0.35
             font.bold: true
             wrapMode: Text.WordWrap
             maximumLineCount: 2000
             lineHeight: 1.2
+
+            Behavior on anchors.topMargin {
+                PropertyAnimation { easing.type: Easing.OutCubic; duration: 200  }
+            }                
         }
         
     }
