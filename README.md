@@ -1,4 +1,4 @@
-# Retro Mega v0.2
+# Retro Mega v0.3
 [Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
 <img src="https://github.com/djfumberger/retromini/raw/main/screenshots/homescreen-snes.png" width="320" height="240">
@@ -17,15 +17,19 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great guide [available h
 * Sorting by title, date, rating, last played.
 * Filtering by favorites.
 * Make sure to remember where you left off.
+* Video, screenshot, and descriptions of games.
 
 ## Planned Updates
 * Search.
-* Detail pages.
 * Video previews.
 * Alternative game views.
 * Add more / missing system cover images.
 
 ## Version History
+
+### v0.3 - Mar 19th
+
+* Added detail screen for games. Detail screen will show screenshots, description, and videos.
 
 ### v0.2 - Feb 21st
 
