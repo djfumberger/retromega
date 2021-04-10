@@ -15,19 +15,28 @@ Item {
     }
 
     property var mainGenre: {
+        if (game.genreList.lenght == 0) { return null }
         var g = game.genreList[0]
         var s = g.split(',')
         return s[0]
     }
     
     property var players: {
-        if (!game) { return "" }
-        return game.players + " Player" + (game.players > 1 ? "s" : "") + ", "
+        if (!game) { return null }
+        if (game.players > 0) {
+            return game.players + " Player" + (game.players > 1 ? "s" : "")
+        } else {
+            return null
+        }
+    }
+
+    property var playerGenre : {
+        return [players, mainGenre].filter(v => { return v != null }).join(",")
     }
 
     property var releaseDate: {
         if (!game) { return "" }
-        return "Released " + game.releaseYear
+        return (game.releaseYear)  ? "Released " + game.releaseYear : ""
     }
 
     property var developedBy: {
@@ -136,7 +145,7 @@ Item {
                 width: (parent.width / 2) - margin - 20
 
                 Text {
-                    text: players + mainGenre
+                    text: playerGenre
                     color: textColor
                     opacity: 0.5
                     font.pixelSize: 18
@@ -240,6 +249,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             //height: 100
+            visible: introDescription.length > 0 
             height: 127
 
             // Rectangle {
