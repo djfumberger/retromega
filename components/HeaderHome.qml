@@ -19,6 +19,14 @@ Rectangle {
 
     property var light: false
 
+    property var showStatusInfo : {
+        return layoutScreen.height >= 480
+    }
+
+    property var showBattery : {
+        return showStatusInfo && (api.device != null && api.device.batteryPercent)
+    }
+
     id: home_header
     color: "transparent"
     width: parent.width
@@ -86,17 +94,30 @@ Rectangle {
         KeyNavigation.down: mainFocus                  
     }       
 
+    
+    BatteryIndicator {
+        id: battery_indicator
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.rightMargin: 32
+        opacity: 0.5
+        lightStyle: light
+        visible: showBattery 
+    }
+
     Text {
         id: header_time
         text: Qt.formatTime(new Date(), "hh:mm")          
-        anchors.right: parent.right
+        anchors.right:  parent.right
         anchors.top: parent.top
         anchors.topMargin: 16
-        anchors.rightMargin: 32
+        anchors.rightMargin: showBattery ? 70 : 32
         color: light ? "#60ffffff" : "#60000000"
         font.pixelSize: 18
         font.letterSpacing: -0.3
-        font.bold: true              
+        font.bold: true     
+        visible: showStatusInfo         
     }      
-    
+
 }

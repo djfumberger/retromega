@@ -214,7 +214,7 @@ FocusScope {
 
     property var layoutScreen : {
         "width": 640,
-        "height": 480,
+        "height": parent.height,
         "background": theme.background,      
     }
 
@@ -235,7 +235,7 @@ FocusScope {
 
     property var layoutContainer : {
         "width": layoutScreen.width,
-        "height": layoutScreen.height - layoutHeader.height - layoutHeader.height,
+        "height": parent.height - layoutHeader.height - layoutHeader.height,
         "background": "transparent",
         
     }   

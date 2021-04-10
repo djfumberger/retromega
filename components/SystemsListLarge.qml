@@ -74,8 +74,8 @@ ListView {
     Rectangle {
         property int bgIndex: -1
         id: systemsBackground
-        width: 640
-        height: 480
+        width: layoutScreen.width
+        height: layoutScreen.height
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.topMargin: -55
