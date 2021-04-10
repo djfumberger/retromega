@@ -3,10 +3,9 @@
 
 <img src="screenshots/device/homescreen-snes.png">
 
-
 ## Installation
 
-[Download](https://github.com/djfumberger/retromega/archive/main.zip) and extract to your [theme directory](http://pegasus-frontend.org/docs/user-guide/installing-themes) under the folder retromini. You can then select the theme in the settings menu of Pegasus.
+[Download](https://github.com/djfumberger/retromega/archive/main.zip) and extract to your [theme directory](http://pegasus-frontend.org/docs/user-guide/installing-themes) under the folder retromega. You can then select the theme in the settings menu of Pegasus.
 
 To get Pegasus setup on your Retroid Pocket 2 there's a great written guide [available here](https://basvroegop.nl/pegasus) or a great video guide [available here](https://www.youtube.com/watch?v=fGWve7YYwGQ)
 
@@ -17,11 +16,11 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great written guide [ava
 * Sorting by title, date, rating, last played.
 * Filtering by favorites.
 * Make sure to remember where you left off.
+* Video previews.
 * Video, screenshot, and descriptions of games.
 
 ## Planned Updates
 * Search.
-* Video previews.
 * Alternative game views.
 * Add more / missing system cover images.
 
