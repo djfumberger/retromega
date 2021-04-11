@@ -11,6 +11,16 @@ Item {
     width: parent.width
     height: parent.height
     property var active: false
+    property var pauseVideo: false
+    onPauseVideoChanged: {
+        if (video && active) {
+            if (pauseVideo) {
+                videoPlayer.pause()
+            } else {
+                videoPlayer.play()
+            }
+        }
+    }
     onActiveChanged: {
         if (video && active) {
             videoPlayer.play()

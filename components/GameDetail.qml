@@ -8,6 +8,7 @@ Item {
     property var active: false
     property var game: null
     property var showFullDescription: false
+    property var pauseScreenshotVideo: false
     //visible: active
 
     onGameChanged: {
@@ -81,6 +82,9 @@ Item {
         property var textScroll: 10
 
     Keys.onPressed: {      
+        if (event.key == '1048586') {
+            pauseScreenshotVideo = !pauseScreenshotVideo
+        }
         if (api.keys.isCancel(event) && active) {
             event.accepted = true
             showGameDetail(false)
@@ -237,6 +241,7 @@ Item {
                 screenshot: gameScreenshot
                 video: gameVideo
                 active: gameDetail.active
+                pauseVideo: showFullDescription || pauseScreenshotVideo
             }
 
         }        
