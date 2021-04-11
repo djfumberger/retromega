@@ -2,6 +2,7 @@
 [Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
 <img src="screenshots/device/homescreen-snes.png">
+<img src="screenshots/device/games-list-snes.png">
 
 ## Installation
 
@@ -54,19 +55,16 @@ Initial Release
 <img src="screenshots/device/games-detail.png" >
 <img src="screenshots/device/games-sort-options.png" >
 
-## Systems
+## System Screenshots
 
-
-
-
-<img src="screenshots/system-dreamcast.png" width="640" height="480">
-<img src="screenshots/system-gameboy.png" width="640" height="480">
-<img src="screenshots/system-gbc.png" width="640" height="480">
-<img src="screenshots/system-mastersystem.png" width="640" height="480">
-<img src="screenshots/system-n64.png" width="640" height="480">
-<img src="screenshots/system-neogeo.png" width="640" height="480">
-<img src="screenshots/system-ngc.png" width="640" height="480">
-<img src="screenshots/system-ngp.png" width="640" height="480">
-<img src="screenshots/system-psx.png" width="640" height="480">
-<img src="screenshots/system-segacd.png" width="640" height="480">
-<img src="screenshots/system-snes.png" width="640" height="480">
+<img src="screenshots/system-dreamcast.png" width="640">
+<img src="screenshots/system-gameboy.png" width="640">
+<img src="screenshots/system-gbc.png" width="640">
+<img src="screenshots/system-mastersystem.png" width="640">
+<img src="screenshots/system-n64.png"  width="640">
+<img src="screenshots/system-neogeo.png"  width="640">
+<img src="screenshots/system-ngc.png" width="640">
+<img src="screenshots/system-ngp.png"  width="640">
+<img src="screenshots/system-psx.png"  width="640">
+<img src="screenshots/system-segacd.png"  width="640">
+<img src="screenshots/system-snes.png"  width="640">
