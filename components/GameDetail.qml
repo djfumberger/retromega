@@ -31,7 +31,7 @@ Item {
     }
 
     property var playerGenre : {
-        return [players, mainGenre].filter(v => { return v != null }).join(",")
+        return [players, mainGenre].filter(v => { return v != null }).join(" • ")
     }
 
     property var releaseDate: {
@@ -142,7 +142,7 @@ Item {
                 anchors.top: title.bottom 
                 spacing: 8
                 anchors.topMargin: 4
-                width: (parent.width / 2) - margin - 20
+                width: (parent.width / 2) - margin  
 
                 Text {
                     text: playerGenre
@@ -151,6 +151,11 @@ Item {
                     font.pixelSize: 18
                     font.letterSpacing: -0.35
                     font.bold: true
+                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    wrapMode: Text.WordWrap
+                    maximumLineCount: 4                    
                 }
 
                 Text {
