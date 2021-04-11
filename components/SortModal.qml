@@ -8,7 +8,7 @@ Item {
     states: [ 
         State{
             name: "hidden"; when: !active
-            PropertyChanges { target: modalContent; anchors.verticalCenterOffset: 480}
+            PropertyChanges { target: modalContent; anchors.verticalCenterOffset: layoutScreen.height}
         },
 
         State{
@@ -54,7 +54,7 @@ Item {
 
     FocusScope {
         id: modalContent
-        anchors.verticalCenterOffset: 480
+        anchors.verticalCenterOffset: layoutScreen.height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         width: parent.width * 0.75

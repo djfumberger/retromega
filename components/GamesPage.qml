@@ -249,7 +249,7 @@ Item {
         Rectangle {
             id: header
             color: "transparent"
-            width: 640
+            width: parent.width
             height: 55
             anchors.left: parent.left
             anchors.leftMargin: 0

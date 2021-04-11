@@ -107,8 +107,8 @@ ListView {
     
         Item {
             id: home_item_container
-            width: 640
-            height: 480 - 55 - 55 - 35
+            width: layoutScreen.width
+            height: layoutScreen.height - 55 - 55 - 35
             scale: 1.0
             
             z: 100 - index
@@ -158,8 +158,9 @@ ListView {
                 
                 Image {
                     id: menu_mask
-                    width: 136
-                    height: 480
+                    //width: 136
+                    width: layoutScreen.height * 0.283333
+                    height: layoutScreen.height
                     anchors.top: parent.top
                     anchors.right: parent.right
                     anchors.leftMargin: 0

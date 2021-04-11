@@ -215,7 +215,7 @@ FocusScope {
     }
 
     property var layoutScreen : {
-        "width": 640,
+        "width": parent.width,
         "height": parent.height,
         "background": theme.background,      
     }
