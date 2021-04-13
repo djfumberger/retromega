@@ -1,8 +1,8 @@
 # Retro Mega v0.4
 [Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
-<img src="screenshots/device/homescreen-snes.png">
-<img src="screenshots/device/games-list-snes.png">
+[![Retromega Video](screenshots/screenshot-video.png)](https://www.youtube.com/watch?v=YuCvrY7uy6g)
+
 
 ## Installation
 
