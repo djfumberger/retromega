@@ -1,4 +1,4 @@
-# Retro Mega v0.4
+# Retro Mega v0.5
 [Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
 [![Retromega Video](screenshots/screenshot-video.png)](https://www.youtube.com/watch?v=YuCvrY7uy6g)
@@ -26,6 +26,10 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great written guide [ava
 * Add more / missing system cover images.
 
 ## Version History
+
+### v0.5 - Sep 17th
+
+* Added more System Images
 
 ### v0.4 - Apr 10th
 
