@@ -1,4 +1,4 @@
-# Retro Mega v0.4
+# Retro Mega v0.5
 [Pegasus](https://pegasus-frontend.org) theme for the Retroid Pocket 2.
 
 [![Retromega Video](screenshots/screenshot-video.png)](https://www.youtube.com/watch?v=YuCvrY7uy6g)
