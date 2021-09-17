@@ -27,6 +27,10 @@ To get Pegasus setup on your Retroid Pocket 2 there's a great written guide [ava
 
 ## Version History
 
+### v0.5 - Sep 17th
+
+* Added more System Images
+
 ### v0.4 - Apr 10th
 
 * Added support for battery indicator
