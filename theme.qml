@@ -186,6 +186,7 @@ FocusScope {
         "sega32x"      : "#6935E9",
         "segacd"      : "#C85173",
         "dreamcast"   : "#2387FF",
+        "psp"         : "#4E0B9C",
         "default"     : "#2387FF"
     }
     
@@ -212,6 +213,7 @@ FocusScope {
         "pcengine" : "NEC",
         "tg16"     : "NEC",
         "psx"      : "Sony",
+        "psp"      : "Sony"
     }
 
     property var layoutScreen : {
