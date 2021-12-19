@@ -38,7 +38,7 @@ Rectangle {
         anchors.rightMargin: 22
         anchors.left: parent.left
         anchors.right: parent.right
-        color: light ? "#00ffffff" : "#20000000"
+        color: light ? "#00ffffff" : theme.navBorder
         anchors.bottom: parent.bottom
         height: 1
     }
