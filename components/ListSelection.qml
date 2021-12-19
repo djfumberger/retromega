@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 
 Item {
-	property var tintColor : "#333333"
+	property var tintColor : theme.listRowColor
 
 	// DropShadow {
 	// 	anchors.fill: list_selection

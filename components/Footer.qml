@@ -12,7 +12,7 @@ Item {
   Rectangle {
     id: footer
     //color: light ? "#60000000" : "transparent"
-    color: "#F3F3F3"
+    color: theme.background
     height: parent.height  
     anchors {
       left: parent.left
@@ -28,7 +28,7 @@ Item {
         anchors.rightMargin: 22
         anchors.left: parent.left
         anchors.right: parent.right
-        color: lightActive ? "#20ffffff" : "#20000000"
+        color: lightActive ? "#20ffffff" : theme.navBorder
         anchors.top: parent.top
         height: 1
     }
@@ -51,7 +51,7 @@ Item {
       text: title
       anchors.right: parent.right
       anchors.rightMargin: 32
-      color: "#9B9B9B"
+      color: theme.footerText
       font.pixelSize: 18
       font.letterSpacing: -0.3
       font.bold: true              
@@ -74,13 +74,24 @@ Item {
     }      
 
    ButtonLegend {
-      id: button_legend_x
+      id: button_legend_b
       title: "Menu"
       key: "B"
       width: 55
       lightText: lightActive
       anchors.left: button_legend_a.right
       anchors.leftMargin: 36
+      anchors.verticalCenter: parent.verticalCenter
+    }
+
+    ButtonLegend {
+      id: button_legend_x
+      title: "Theme"
+      key: "X"
+      width: 55
+      lightText: lightActive
+      anchors.left: button_legend_b.right
+      anchors.leftMargin: 16
       anchors.verticalCenter: parent.verticalCenter
     }
 

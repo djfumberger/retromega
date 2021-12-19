@@ -20,7 +20,7 @@ Item {
         }
     }
 
-    property var gamesColor : "#000000"
+    property var gamesColor : systemColors.system
     property var selectedGame: {
         return gameView.currentIndex >= 0 ? items.get(gameView.currentIndex) : items.get(0)
     } 

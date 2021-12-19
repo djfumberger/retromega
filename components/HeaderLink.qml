@@ -8,19 +8,21 @@ Item {
     property var lightText : false
     property var textColor : {
         if (activeFocus) {
+            return theme.headerLinkActive
             return "#ffffff"
         }
         if (selected) {
             if (lightText) {
                 return "#ffffff"
             } else {
+                return theme.headerLinkSelected
                 return "#000000"
             }
         }
         if (lightText) {
             return "#60ffffff"            
         } else {
-            return "#60000000"
+            return theme.headerLinkText
         }
         return "#9B9B9B"
     }
