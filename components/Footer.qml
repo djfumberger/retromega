@@ -80,7 +80,7 @@ Item {
       width: 55
       lightText: lightActive
       anchors.left: button_legend_a.right
-      anchors.leftMargin: 36
+      anchors.leftMargin: 39
       anchors.verticalCenter: parent.verticalCenter
     }
 
@@ -91,7 +91,7 @@ Item {
       width: 55
       lightText: lightActive
       anchors.left: button_legend_b.right
-      anchors.leftMargin: 16
+      anchors.leftMargin: 24
       anchors.verticalCenter: parent.verticalCenter
     }
 

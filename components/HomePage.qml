@@ -58,6 +58,9 @@ Item {
             return;
         }  
 
+        if (api.keys.isDetails(event)) {
+            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+        }
     }  
 
     Rectangle {

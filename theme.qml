@@ -123,6 +123,10 @@ FocusScope {
         currentPage = page
     }
 
+    function setCurrentTheme(theme) {
+        currentTheme = theme
+    }
+
     property var currentGameDetail : null
     property var currentGameDetailIndex : 0
     property var isShowingGameDetail : false
@@ -154,7 +158,11 @@ FocusScope {
         if (currentPage === 'GamesPage') {
             return systemColors[currentCollection.shortName] || "#000000" 
         } else {
-            return "#000000"
+            if (currentTheme == 'dark') {
+                return "#ffffff"
+            } else {
+                return "#000000"
+            }
         }
     }
 
@@ -164,10 +172,14 @@ FocusScope {
         "title"              : "#444",
         "footerText"         : "#9B9B9B",
         "navBorder"          : "#20000000",
+        "separator"          : "#10000000",
         "headerText"         : "#9B9B9B",
         "headerLinkText"     : "#60000000",
         "headerLinkActive"   : "#ffffff",
-        "headerLinkSelected" : "#ff0000",
+        "headerLinkSelected" : "#000000",
+        "bodyText"           : "#333333",
+        "buttonSelected"     : "#000000",
+        "buttonUnselected"   : "#ffffff",
         "listRowColor"       : "#333333",
         "listText"           : "#333333",
         "listTextSelected"   : "#ffffff",              
@@ -180,9 +192,13 @@ FocusScope {
         "footerText"         : "#70ffffff",
         "headerText"         : "#70ffffff",
         "navBorder"          : "#15ffffff",
+        "separator"          : "#15ffffff",
         "headerLinkText"     : "#60ffffff",
         "headerLinkActive"   : "#ffffff",
         "headerLinkSelected" : "#ffffff",
+        "bodyText"           : "#60ffffff",    
+        "buttonSelected"     : "#ffffff",
+        "buttonUnselected"   : "#222222",    
         "listRowColor"       : "#333333",
         "listText"           : "#60ffffff",
         "listTextSelected"   : "#ffffff",      
