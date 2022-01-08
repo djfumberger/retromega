@@ -113,7 +113,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 16
         anchors.rightMargin: showBattery ? 70 : 32
-        color: light ? "#60ffffff" : "#60000000"
+        color: light ? "#60ffffff" : theme.headerLinkText
         font.pixelSize: 18
         font.letterSpacing: -0.3
         font.bold: true     

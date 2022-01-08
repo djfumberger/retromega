@@ -319,13 +319,14 @@ Item {
                       visible: isLastRow(index) && showSeeAll
                       anchors.top: parent.top
                       anchors.topMargin: 48 
+                      
                       Rectangle {
                           width: parent.width
                           anchors.top: parent.top
                           height: 1
-                          color: "black"
-                          opacity: 0.1
+                          color: theme.listRowColor
                       }
+
                       ListRow {
                           title: "See All"
                           selected: selectSeeAll

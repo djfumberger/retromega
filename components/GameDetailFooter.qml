@@ -26,7 +26,7 @@ Item {
                 anchors.rightMargin: 22
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: "#e3e3e3"
+                color: theme.navBorder
                 anchors.top: parent.top
                 height: 1
             }

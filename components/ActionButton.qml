@@ -9,7 +9,7 @@ Item {
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
-        color: parent.activeFocus ? systemColor : "#ffffff"
+        color: parent.activeFocus ? systemColor : theme.buttonUnselected
         radius: 6
     }
 
@@ -45,6 +45,6 @@ Item {
     ColorOverlay {
         anchors.fill: iconImage
         source: iconImage
-        color: parent.activeFocus ? "#ffffff" : systemColor// "#333333"
+        color: parent.activeFocus ? (systemColor == "#ffffff" ? "#000000" : "#ffffff") : systemColor// "#333333"
     }    
 }
