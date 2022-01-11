@@ -81,7 +81,13 @@ Item {
     }
         property var textScroll: 10
 
-    Keys.onPressed: {      
+    Keys.onPressed: {     
+         if (api.keys.isFilters(event)) {
+            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+            event.accepted = true;
+            return true;
+        }
+                                
         if (event.key == '1048586') {
             pauseScreenshotVideo = !pauseScreenshotVideo
         }

@@ -40,7 +40,7 @@ Item {
 		width: 12
 		visible: favorite
 		fillMode: Image.PreserveAspectFit
-		source: "../assets/icons/favorite.svg"
+		source: "../assets/icons/favorite" + (currentTheme == 'dark' ? "-dark" : "") + ".svg"
 		asynchronous: true    
 		anchors {
 			right: parent.right

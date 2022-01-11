@@ -87,7 +87,7 @@ Item {
     ButtonLegend {
       id: button_legend_x
       title: "Theme"
-      key: "X"
+      key: "Y"
       width: 55
       lightText: lightActive
       anchors.left: button_legend_b.right

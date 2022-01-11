@@ -72,6 +72,8 @@ ListView {
             height: 270
             scale: 0.8
             Keys.onPressed: {
+                checkToggleTheme()
+
                 if (api.keys.isAccept(event)) {
                     event.accepted = true;
                     

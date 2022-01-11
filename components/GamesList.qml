@@ -94,6 +94,11 @@ Item {
             showIndex = false;
             return
         }
+
+        if (checkToggleTheme()) {
+            return false
+        }
+
     }
     
     function isLastRow(currentIndex) {
@@ -207,6 +212,7 @@ Item {
 
               highlightMoveDuration: 0
               focus: listContent.activeFocus
+              
                 Keys.onUpPressed: { 
                     if (focusSeeAll) {
                         focusSeeAll = false
@@ -253,7 +259,14 @@ Item {
                   width: games.width - 12 - 12 - 12
                   height: rowHeight(index)
                   
-                  Keys.onPressed: {                                            
+                  Keys.onPressed: {  
+                      
+                        if (api.keys.isFilters(event)) {
+                            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+                            event.accepted = true;
+                            return true;
+                        }
+                                          
                         //Launch game
                         if (api.keys.isCancel(event)) {
                             if (showSeeAll) {
@@ -324,7 +337,7 @@ Item {
                           width: parent.width
                           anchors.top: parent.top
                           height: 1
-                          color: theme.listRowColor
+                          color: theme.separator
                       }
 
                       ListRow {
