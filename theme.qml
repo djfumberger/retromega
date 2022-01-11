@@ -234,6 +234,7 @@ FocusScope {
         "psp"         : "#4E0B9C",
         "default"     : "#2387FF",
         "system"      : "#000000"
+        "saturn"      : "#2387FF",
     }
     
     property var systemColorsDark: {
@@ -316,6 +317,19 @@ FocusScope {
         }
     }
   
+    function checkToggleTheme() {
+        if (api.keys.isFilters(event)) {
+            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+            event.accepted = true;
+            return true;
+        }
+        return false;
+    }
+   
+    Keys.onPressed: {                                            
+        checkToggleTheme()        
+    }  
+
     //Sounds
     SoundEffect {
         id: backSound

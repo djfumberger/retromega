@@ -113,6 +113,7 @@ ListView {
             
             z: 100 - index
             Keys.onPressed: {
+                
                 if (api.keys.isAccept(event)) {
                     event.accepted = true;
                     
@@ -125,11 +126,7 @@ ListView {
                     
                     return;
                 }      
-                if (api.keys.isFilters(event)) {
-                    event.accepted = true;
-                    toggleZoom();
-                    return;
-                }                      
+
             }                          
 
 

@@ -121,6 +121,10 @@ Item {
             return
         }  
 
+        if (checkToggleTheme()) {
+            return false
+        }
+
         event.accepted = false
     }
 

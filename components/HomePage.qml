@@ -58,7 +58,7 @@ Item {
             return;
         }  
 
-        if (api.keys.isDetails(event)) {
+        if (api.keys.isFilters(event)) {
             setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
         }
     }  
