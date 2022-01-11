@@ -186,7 +186,7 @@ FocusScope {
     }
 
     property var darkTheme : {
-        "background"         : "#111111",
+        "background"         : "#222222",
         "text"               : "#70ffffff",
         "title"              : "#fff",
         "footerText"         : "#70ffffff",
@@ -233,7 +233,7 @@ FocusScope {
         "dreamcast"   : "#2387FF",
         "psp"         : "#4E0B9C",
         "default"     : "#2387FF",
-        "system"      : "#000000"
+        "system"      : "#000000",
         "saturn"      : "#2387FF",
     }
     
