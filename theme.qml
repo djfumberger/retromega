@@ -24,7 +24,7 @@ FocusScope {
         currentCollectionIndex = api.memory.get('currentCollectionIndex') ?? 0
         currentPage = api.memory.get('currentPage') ?? 'HomePage'
         collectionListIndex = api.memory.get('collectionListIndex') ?? 0
-        collectionSortMode = api.memory.get('collectionSortMode') ?? "title"
+        collectionSortMode = api.memory.get('collectionSortMode') ?? "sort_title"
         collectionSortDirection =  api.memory.get('collectionSortDirection') ?? 0
         collectionFilterMode =  api.memory.get('collectionFilterMode') ?? "all"
         collectionShowAllItems =  api.memory.get('collectionShowAllItems') ?? false
@@ -66,7 +66,7 @@ FocusScope {
 
     // Collection sort mode
     // Collection list index
-    property var collectionSortMode : "title"
+    property var collectionSortMode : "sort_title"
     property var collectionSortDirection : 0
     property var collectionFilterMode : "all"
 
@@ -77,7 +77,7 @@ FocusScope {
         if (collectionSortMode != sortMode || sortMode == "lastPlayed" || sortMode == "rating")  { 
         
             switch (sortMode) {
-                case "title": {
+                case "sort_title": {
                     direction = 0
                     break
                 }
