@@ -2,7 +2,7 @@ import QtQuick 2.12
 import QtGraphicalEffects 1.12
 Item {
     property var title: "Title"
-    property var mode: "sort_title"
+    property var mode: "sortBy"
     property var itemColor: "#00000"
     property var selected: {
         return collectionSortMode == mode
@@ -11,7 +11,7 @@ Item {
         return (collectionSortDirection == 0 ? "ascending" : "descending")
     }
     property var showSortOrder: {
-        return (collectionSortMode == "sort_title" || collectionSortMode == "release") 
+        return (collectionSortMode == "sortBy" || collectionSortMode == "release") 
     }
 
     property var activeSortImage : {

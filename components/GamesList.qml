@@ -38,7 +38,7 @@ Item {
     // Sort mode that the items have applied to them.
     // Is used to determine how to show the quick index.
     // Doesn't actually apply the sort to the collection.
-    property var sortMode: "sort_title"
+    property var sortMode: "sortBy"
     property var sortDirection: 0
 
     property var selectSeeAll : {
@@ -133,7 +133,7 @@ Item {
             width: 30
             focus: showIndex
             active: showIndex
-            alpha: sortMode == "sort_title" 
+            alpha: sortMode == "sortBy" 
             reversed: sortDirection == 1
             selectedItem: selectedGame
             selectedItemIndex: gameView.currentIndex
