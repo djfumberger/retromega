@@ -23,7 +23,7 @@ Item {
     property var collectionSortTitle: {
         var title = "Title"
         switch (collectionSortMode) {
-            case "title": {
+            case "sortBy": {
                 title = "By Title"
                 break
             }

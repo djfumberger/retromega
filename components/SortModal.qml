@@ -81,7 +81,7 @@ Item {
                 SortItem {
                     title: "By Title"
                     width: parent.width
-                    mode: "title"
+                    mode: "sortBy"
                     itemColor: sortColor
                     KeyNavigation.down: by_last_played
                 }
