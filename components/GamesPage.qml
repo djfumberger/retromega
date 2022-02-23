@@ -121,6 +121,10 @@ Item {
             return
         }  
 
+        if (checkToggleTheme()) {
+            return false
+        }
+
         event.accepted = false
     }
 
@@ -181,7 +185,7 @@ Item {
                 anchors.rightMargin: 22
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: "#e3e3e3"
+                color: theme.navBorder//"#e3e3e3"
                 anchors.top: parent.top
                 height: 1
             }
@@ -190,7 +194,7 @@ Item {
                 text: footerTitle
                 anchors.right: parent.right
                 anchors.rightMargin: 32
-                color: "#9B9B9B"//theme.title
+                color: theme.footerText//theme.title
                 font.pixelSize: 18
                 font.letterSpacing: -0.3
                 font.bold: true              
@@ -262,7 +266,7 @@ Item {
                 anchors.rightMargin: 22
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: "#e3e3e3"
+                color: theme.navBorder //"#e3e3e3"
                 anchors.bottom: parent.bottom
                 height: 1
             }
@@ -288,7 +292,7 @@ Item {
                 anchors.top: parent.top
                 anchors.topMargin: 16
                 anchors.rightMargin: 8
-                color: "#9B9B9B"
+                color: theme.headerText
                 font.pixelSize: 18
                 font.letterSpacing: -0.3
                 font.bold: true              

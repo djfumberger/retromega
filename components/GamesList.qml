@@ -20,7 +20,7 @@ Item {
         }
     }
 
-    property var gamesColor : "#000000"
+    property var gamesColor : systemColors.system
     property var selectedGame: {
         return gameView.currentIndex >= 0 ? items.get(gameView.currentIndex) : items.get(0)
     } 
@@ -94,6 +94,11 @@ Item {
             showIndex = false;
             return
         }
+
+        if (checkToggleTheme()) {
+            return false
+        }
+
     }
     
     function isLastRow(currentIndex) {
@@ -207,6 +212,7 @@ Item {
 
               highlightMoveDuration: 0
               focus: listContent.activeFocus
+              
                 Keys.onUpPressed: { 
                     if (focusSeeAll) {
                         focusSeeAll = false
@@ -253,7 +259,14 @@ Item {
                   width: games.width - 12 - 12 - 12
                   height: rowHeight(index)
                   
-                  Keys.onPressed: {                                            
+                  Keys.onPressed: {  
+                      
+                        if (api.keys.isFilters(event)) {
+                            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+                            event.accepted = true;
+                            return true;
+                        }
+                                          
                         //Launch game
                         if (api.keys.isCancel(event)) {
                             if (showSeeAll) {
@@ -319,13 +332,14 @@ Item {
                       visible: isLastRow(index) && showSeeAll
                       anchors.top: parent.top
                       anchors.topMargin: 48 
+                      
                       Rectangle {
                           width: parent.width
                           anchors.top: parent.top
                           height: 1
-                          color: "black"
-                          opacity: 0.1
+                          color: theme.separator
                       }
+
                       ListRow {
                           title: "See All"
                           selected: selectSeeAll

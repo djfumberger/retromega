@@ -69,7 +69,8 @@ FocusScope {
     property var collectionSortMode : "sortBy"
     property var collectionSortDirection : 0
     property var collectionFilterMode : "all"
-
+    property var currentTheme : "dark"
+    
     function setCollectionSortMode(sortMode) {
         api.memory.set('collectionSortMode', sortMode)
         
@@ -122,6 +123,10 @@ FocusScope {
         currentPage = page
     }
 
+    function setCurrentTheme(theme) {
+        currentTheme = theme
+    }
+
     property var currentGameDetail : null
     property var currentGameDetailIndex : 0
     property var isShowingGameDetail : false
@@ -153,19 +158,59 @@ FocusScope {
         if (currentPage === 'GamesPage') {
             return systemColors[currentCollection.shortName] || "#000000" 
         } else {
-            return "#000000"
+            if (currentTheme == 'dark') {
+                return "#ffffff"
+            } else {
+                return "#000000"
+            }
         }
     }
 
+    property var lightTheme : {
+        "background"         : "#F3F3F3",
+        "text"               : "#70000000",
+        "title"              : "#444",
+        "footerText"         : "#9B9B9B",
+        "navBorder"          : "#20000000",
+        "separator"          : "#10000000",
+        "headerText"         : "#9B9B9B",
+        "headerLinkText"     : "#60000000",
+        "headerLinkActive"   : "#ffffff",
+        "headerLinkSelected" : "#000000",
+        "bodyText"           : "#333333",
+        "buttonSelected"     : "#000000",
+        "buttonUnselected"   : "#ffffff",
+        "listRowColor"       : "#333333",
+        "listText"           : "#333333",
+        "listTextSelected"   : "#ffffff",              
+    }
+
+    property var darkTheme : {
+        "background"         : "#181818",
+        "text"               : "#70ffffff",
+        "title"              : "#fff",
+        "footerText"         : "#70ffffff",
+        "headerText"         : "#70ffffff",
+        "navBorder"          : "#15ffffff",
+        "separator"          : "#15ffffff",
+        "headerLinkText"     : "#60ffffff",
+        "headerLinkActive"   : "#ffffff",
+        "headerLinkSelected" : "#ffffff",
+        "bodyText"           : "#60ffffff",    
+        "buttonSelected"     : "#ffffff",
+        "buttonUnselected"   : "#2F2F2F",    
+        "listRowColor"       : "#333333",
+        "listText"           : "#60ffffff",
+        "listTextSelected"   : "#ffffff",      
+    }
+
     property var theme : {
-        "background": "#F3F3F3",
-        "text":"#70000000",
-        "title":"#444"
+        return (currentTheme == "light") ? lightTheme : darkTheme
     } 
     
-    property var systemColors : {
+    property var systemColorsDefault : {
         "gg"       : "#011DA9",
-        "gamegear" : "#FFAA22",
+        "gamegear" : "#FFAA22", 
         "snes"     : "#AA6AFF",
         "ngp"     : "#AA6AFF",
         "genesis"  : "#DF535B",
@@ -188,9 +233,25 @@ FocusScope {
         "saturn"      : "#0D4CFB",
         "dreamcast"   : "#2387FF",
         "psp"         : "#4E0B9C",
-        "default"     : "#2387FF"
+        "default"     : "#2387FF",
+        "system"      : "#000000",
+        "saturn"      : "#2387FF",
     }
     
+    property var systemColorsDark: {
+        "nds"      : "#E7C13A",
+        "system"   : "#333333"
+    }
+
+    property var systemColors: {
+        var c = systemColorsDefault
+        for(var key in systemColorsDark) {
+            c[key] = systemColorsDark[key]
+        }
+        return c
+        //return systemColorsDefault + systemColorsDark
+    }
+
     property var systemCompanies: {
         "dreamcast"  : "Sega",
         "gg"         : "Sega",
@@ -258,6 +319,19 @@ FocusScope {
         }
     }
   
+    function checkToggleTheme() {
+        if (api.keys.isFilters(event)) {
+            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+            event.accepted = true;
+            return true;
+        }
+        return false;
+    }
+   
+    Keys.onPressed: {                                            
+        checkToggleTheme()        
+    }  
+
     //Sounds
     SoundEffect {
         id: backSound

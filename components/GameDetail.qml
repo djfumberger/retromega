@@ -46,7 +46,7 @@ Item {
     }
 
     property var textColor: {
-        return "#333333"
+        return theme.bodyText// "#333333"
     }
 
     property var margin: {
@@ -81,7 +81,13 @@ Item {
     }
         property var textScroll: 10
 
-    Keys.onPressed: {      
+    Keys.onPressed: {     
+         if (api.keys.isFilters(event)) {
+            setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
+            event.accepted = true;
+            return true;
+        }
+                                
         if (event.key == '1048586') {
             pauseScreenshotVideo = !pauseScreenshotVideo
         }
@@ -97,7 +103,7 @@ Item {
     Rectangle {
         color: theme.background
         anchors.fill: parent
-        opacity: 1.0
+        opacity: 1.0    
     }
 
     // Content
@@ -285,8 +291,7 @@ Item {
                 anchors.right: parent.right
                 height: 1
                 anchors.top: parent.top
-                color: textColor
-                opacity: 0.1
+                color: theme.separator
             }
 
             // Rectangle {
@@ -457,7 +462,7 @@ Item {
             wrapMode: Text.WordWrap
             maximumLineCount: 2000
             lineHeight: 1.2
-
+            color: theme.bodyText
             Behavior on anchors.topMargin {
                 PropertyAnimation { easing.type: Easing.OutCubic; duration: 200  }
             }                

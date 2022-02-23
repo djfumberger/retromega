@@ -5,7 +5,7 @@ Item {
 	property var title : "Row"
 	property var selected : false
 	property var favorite : false
-	property var rowColor : "#000000"
+	property var rowColor : theme.listRowColor
 	property var emptyStyle : false
 	ListSelection {
 		anchors.left: parent.left
@@ -20,7 +20,7 @@ Item {
 
 	Text {
 		text:title
-		color: selected ? "#ffffff" : "#333333"
+		color: selected ? theme.listTextSelected : theme.listText
 		opacity: emptyStyle ? 0.3 : 1.0
 		font.family: globalFonts.sans
 		font.pixelSize: 18
@@ -40,7 +40,7 @@ Item {
 		width: 12
 		visible: favorite
 		fillMode: Image.PreserveAspectFit
-		source: "../assets/icons/favorite.svg"
+		source: "../assets/icons/favorite" + (currentTheme == 'dark' ? "-dark" : "") + ".svg"
 		asynchronous: true    
 		anchors {
 			right: parent.right
