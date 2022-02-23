@@ -186,7 +186,7 @@ FocusScope {
     }
 
     property var darkTheme : {
-        "background"         : "#222222",
+        "background"         : "#181818",
         "text"               : "#70ffffff",
         "title"              : "#fff",
         "footerText"         : "#70ffffff",
@@ -198,7 +198,7 @@ FocusScope {
         "headerLinkSelected" : "#ffffff",
         "bodyText"           : "#60ffffff",    
         "buttonSelected"     : "#ffffff",
-        "buttonUnselected"   : "#222222",    
+        "buttonUnselected"   : "#2F2F2F",    
         "listRowColor"       : "#333333",
         "listText"           : "#60ffffff",
         "listTextSelected"   : "#ffffff",      
