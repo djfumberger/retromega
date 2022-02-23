@@ -185,6 +185,7 @@ FocusScope {
         "psx"      : "#F0CC40",
         "sega32x"      : "#6935E9",
         "segacd"      : "#C85173",
+        "saturn"      : "#0D4CFB",
         "dreamcast"   : "#2387FF",
         "psp"         : "#4E0B9C",
         "default"     : "#2387FF"
@@ -200,6 +201,7 @@ FocusScope {
         "megacd"  : "Sega",
         "mastersystem"  : "Sega",
         "sega32x"  : "Sega",
+        "saturn"   : "Sega",
         "neogeo"   : "SNK",
         "neogeocd" : "SNK",
         "ngp"      : "SNK",
