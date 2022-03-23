@@ -6,8 +6,8 @@ import SortFilterProxyModel 0.2
 import 'components' as Components
 
 FocusScope {
-    id: root  
-    
+    id: root
+
     Timer {
         id: timer
     }
@@ -19,7 +19,7 @@ FocusScope {
         timer.start();
     }
 
-    Component.onCompleted: { 
+    Component.onCompleted: {
         currentHomeIndex = api.memory.get('homeIndex') ?? 0
         currentCollectionIndex = api.memory.get('currentCollectionIndex') ?? 0
         currentPage = api.memory.get('currentPage') ?? 'HomePage'
@@ -36,7 +36,7 @@ FocusScope {
     property var currentCollection: {
         return allSystems.get(currentCollectionIndex)
     }
-  
+
     function setCollectionIndex(index) {
         //setCollectionListIndex(0)
         api.memory.set('currentCollectionIndex', index)
@@ -60,7 +60,7 @@ FocusScope {
     // Games index
     property var currentGameIndex: 0
     property var currentGame: {return currentCollection.games.get(currentGameIndex)}
-  
+
     // Main homepage index
     property var currentHomeIndex: 0
 
@@ -70,13 +70,13 @@ FocusScope {
     property var collectionSortDirection : 0
     property var collectionFilterMode : "all"
     property var currentTheme : "dark"
-    
+
     function setCollectionSortMode(sortMode) {
         api.memory.set('collectionSortMode', sortMode)
-        
+
         var direction = collectionSortDirection == 0 ? 1 : 0
-        if (collectionSortMode != sortMode || sortMode == "lastPlayed" || sortMode == "rating")  { 
-        
+        if (collectionSortMode != sortMode || sortMode == "lastPlayed" || sortMode == "rating")  {
+
             switch (sortMode) {
                 case "sortBy": {
                     direction = 0
@@ -98,13 +98,13 @@ FocusScope {
         }
 
         collectionSortDirection = direction
-        collectionSortMode = sortMode        
+        collectionSortMode = sortMode
         api.memory.set('collectionSortDirection', direction)
     }
 
     function setCollectionFilterMode(filterMode) {
         api.memory.set('collectionFilterMode', filterMode)
-        collectionFilterMode = filterMode        
+        collectionFilterMode = filterMode
     }
 
     function setHomeIndex(index) {
@@ -112,11 +112,11 @@ FocusScope {
         api.memory.set('homeIndex', index)
         currentHomeIndex = index
     }
-  
+
     property var androidCollection: {
         return api.collections.get(0)
     }
-  
+
     property var currentPage : 'HomePage';
     function setCurrentPage(page) {
         api.memory.set('currentPage', page)
@@ -130,7 +130,7 @@ FocusScope {
     property var currentGameDetail : null
     property var currentGameDetailIndex : 0
     property var isShowingGameDetail : false
-    function showGameDetail(game, index) {                
+    function showGameDetail(game, index) {
         if (game) {
             forwardSound.play()
             currentGameDetail = game
@@ -146,17 +146,17 @@ FocusScope {
     property var launchingGame : false
     function startGame(game, index) {
         currentGameIndex = index
-        setCollectionListIndex(index)       
+        setCollectionListIndex(index)
         launchSound.play()
         launchingGame = true
         delay(400, function() {
             game.launch()
-        })  
+        })
     }
-    
+
     property var systemColor: {
         if (currentPage === 'GamesPage') {
-            return systemColors[currentCollection.shortName] || "#000000" 
+            return systemColors[currentCollection.shortName] || "#000000"
         } else {
             if (currentTheme == 'dark') {
                 return "#ffffff"
@@ -182,7 +182,7 @@ FocusScope {
         "buttonUnselected"   : "#ffffff",
         "listRowColor"       : "#333333",
         "listText"           : "#333333",
-        "listTextSelected"   : "#ffffff",              
+        "listTextSelected"   : "#ffffff",
     }
 
     property var darkTheme : {
@@ -196,21 +196,21 @@ FocusScope {
         "headerLinkText"     : "#60ffffff",
         "headerLinkActive"   : "#ffffff",
         "headerLinkSelected" : "#ffffff",
-        "bodyText"           : "#60ffffff",    
+        "bodyText"           : "#60ffffff",
         "buttonSelected"     : "#ffffff",
-        "buttonUnselected"   : "#2F2F2F",    
+        "buttonUnselected"   : "#2F2F2F",
         "listRowColor"       : "#333333",
         "listText"           : "#60ffffff",
-        "listTextSelected"   : "#ffffff",      
+        "listTextSelected"   : "#ffffff",
     }
 
     property var theme : {
         return (currentTheme == "light") ? lightTheme : darkTheme
-    } 
-    
+    }
+
     property var systemColorsDefault : {
         "gg"       : "#011DA9",
-        "gamegear" : "#FFAA22", 
+        "gamegear" : "#FFAA22",
         "snes"     : "#AA6AFF",
         "ngp"     : "#AA6AFF",
         "genesis"  : "#DF535B",
@@ -236,8 +236,11 @@ FocusScope {
         "default"     : "#2387FF",
         "system"      : "#000000",
         "saturn"      : "#2387FF",
+        "atari2600"      : "#1DA1DC",
+        "atari7800"      : "#FF5B5B",
+        "atarilynx"      : "#AA6AFF",
     }
-    
+
     property var systemColorsDark: {
         "nds"      : "#E7C13A",
         "system"   : "#333333"
@@ -276,13 +279,16 @@ FocusScope {
         "pcengine" : "NEC",
         "tg16"     : "NEC",
         "psx"      : "Sony",
-        "psp"      : "Sony"
+        "psp"      : "Sony",
+        "atari2600": "Atari",
+        "atari7800": "Atari",
+        "atarilynx": "Atari"
     }
 
     property var layoutScreen : {
         "width": parent.width,
         "height": parent.height,
-        "background": theme.background,      
+        "background": theme.background,
     }
 
 
@@ -297,16 +303,16 @@ FocusScope {
         "width": layoutScreen.width,
         "height": 55,
         "background": "transparent",
-        
-    }    
+
+    }
 
     property var layoutContainer : {
         "width": layoutScreen.width,
         "height": parent.height - layoutHeader.height - layoutHeader.height,
         "background": "transparent",
-        
-    }   
- 
+
+    }
+
     function navigate(page){
         setCurrentPage(page)
         if (page == 'HomePage') {
@@ -318,7 +324,7 @@ FocusScope {
            gamesPage.onShow()
         }
     }
-  
+
     function checkToggleTheme() {
         if (api.keys.isFilters(event)) {
             setCurrentTheme(currentTheme == 'light' ? 'dark' : 'light')
@@ -327,43 +333,43 @@ FocusScope {
         }
         return false;
     }
-   
-    Keys.onPressed: {                                            
-        checkToggleTheme()        
-    }  
+
+    Keys.onPressed: {
+        checkToggleTheme()
+    }
 
     //Sounds
     SoundEffect {
         id: backSound
         source: "assets/sound/sound-back.wav"
         volume: 0.5
-    }   
+    }
 
     //Sounds
     SoundEffect {
         id: forwardSound
         source: "assets/sound/sound-forward.wav"
         volume: 0.5
-    }   
+    }
 
     SoundEffect {
         id: navSound
         source: "assets/sound/sound-click2.wav"
         volume: 1.0
-    }   
+    }
 
     SoundEffect {
         id: launchSound
         source: "assets/sound/sound-launch.wav"
         volume: 0.35
-    }      
+    }
 
     SoundEffect {
         id: startSound
         source: "assets/sound/sound-start.wav"
         volume: 0.35
-    }           
-    
+    }
+
     property int lastPlayedMaximum: {
         if (allLastPlayed.count >= 50) {
             return 50
@@ -438,16 +444,16 @@ FocusScope {
             opacity: 1.0
             transitions: Transition {
                 NumberAnimation { properties: "opacity"; easing.type: Easing.InCubic; duration: 200  }
-            }             
+            }
 
-         
-        } 
+
+        }
 
         // Game Detail
         Component {
-            id: gameDetail           
+            id: gameDetail
             Components.GameDetail {
-                //visible: isShowingGameDetail         
+                //visible: isShowingGameDetail
                 id: gameDetailContentView
                 anchors.top: parent.top
                 anchors.right: parent.right
@@ -460,7 +466,7 @@ FocusScope {
 
                 transitions: Transition {
                     NumberAnimation { properties: "opacity"; easing.type: Easing.OutCubic; duration: 1600  }
-                } 
+                }
 
             }
 
@@ -473,9 +479,9 @@ FocusScope {
             anchors.fill: parent
             sourceComponent: gameDetail
             asynchronous: false
-        }   
-          
-    }   
+        }
+
+    }
 
     /**
         Loading Game Overlay
@@ -487,7 +493,7 @@ FocusScope {
         anchors {
             fill: parent
         }
-        states: [ 
+        states: [
 
             State{
                 name: "default"; when: !launchingGame
@@ -503,7 +509,7 @@ FocusScope {
 
         transitions: Transition {
             NumberAnimation { properties: "opacity"; easing.type: Easing.Out; duration: 350  }
-        }            
+        }
         z: 2002
-    }          
+    }
 }
